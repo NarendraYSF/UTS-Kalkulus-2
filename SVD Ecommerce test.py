@@ -1643,20 +1643,29 @@ class EnhancedSVDRecommenderApp:
 
             # Define parameter grid based on the model
             if model_name == "NMF":
-                # For NMF, only include n_epochs (no reg_all)
+                # For NMF, use separate regularization parameters instead of reg_all
                 param_grid = {
                     'n_epochs': epochs,
-                    # No lr_all or reg_all for NMF
+                    'reg_pu': reg_values,  # regularization for user factors
+                    'reg_qi': reg_values  # regularization for item factors
+                    # Note: NMF doesn't use lr_all parameter
                 }
+            elif model_name in ["KNNBasic", "KNNWithMeans"]:
+                # KNN models don't use these parameters
+                param_grid = {}
+                # For KNN models, we might want to optimize other parameters like k, sim_options, etc.
+                self.root.after(0, lambda: messagebox.showinfo("Info",
+                                                               f"{model_name} doesn't require hyperparameter optimization for the selected parameters."))
+                return
             else:
-                # For other models, include n_epochs, lr_all, and reg_all
+                # For SVD and SVDpp, include all parameters
                 param_grid = {
                     'n_epochs': epochs,
                     'lr_all': lr_values,
                     'reg_all': reg_values
                 }
 
-            # Create GridSearchCV without verbose
+            # Create GridSearchCV
             gs = GridSearchCV(algo_class, param_grid, measures=['rmse', 'mae'], cv=3)
             gs.fit(self.data)
 
@@ -1676,7 +1685,10 @@ class EnhancedSVDRecommenderApp:
             mae_means = []
 
             for i, params in enumerate(cv_results['params']):
-                param_str = f"epochs={params['n_epochs']}, lr={params.get('lr_all', 'N/A')}, reg={params.get('reg_all', 'N/A')}"
+                if model_name == "NMF":
+                    param_str = f"epochs={params['n_epochs']}, reg_pu={params['reg_pu']}, reg_qi={params['reg_qi']}"
+                else:
+                    param_str = f"epochs={params['n_epochs']}, lr={params.get('lr_all', 'N/A')}, reg={params['reg_all']}"
                 param_combos.append(param_str)
                 rmse_means.append(cv_results['mean_test_rmse'][i])
                 mae_means.append(cv_results['mean_test_mae'][i])
@@ -1688,7 +1700,9 @@ class EnhancedSVDRecommenderApp:
 
         except Exception as e:
             error_msg = str(e)
-            print(f"Error during optimization: {error_msg}")  # Debugging output
+            print(f"Error during optimization: {error_msg}")
+            import traceback
+            traceback.print_exc()
             self.root.after(0, lambda err=error_msg: self.update_status(f"Error: {err}"))
             self.root.after(0, lambda err=error_msg: messagebox.showerror("Error", f"Optimization failed: {err}"))
 
@@ -1852,15 +1866,16 @@ class EnhancedSVDRecommenderApp:
         canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
     def run_second_optimization(self):
-        """Run second round of hyperparameter optimization"""
-        if self.data is None:
-            messagebox.showwarning("Warning", "No data available. Please generate or import data first.")
+        """Run second round of hyperparameter optimization with factors"""
+        if 'first_round' not in self.best_params:
+            messagebox.showwarning("Warning", "Please run first optimization round before proceeding.")
             return
 
-        # Get selected model and parameters
-        model_name = self.opt_model_var.get()
+        # Get model and parameters
+        model_name = self.current_model_name
+        best_params = self.best_params['first_round']
 
-        # Parse parameter ranges
+        # Parse factors range
         try:
             factors = [int(x.strip()) for x in self.factors_var.get().split(',')]
         except ValueError:
@@ -1873,11 +1888,10 @@ class EnhancedSVDRecommenderApp:
         from surprise import NMF, SVD, SVDpp
 
         # Initialize the parameter grid
-        param_grid = {'n_factors': factors}  # Default for most models like NMF, SVD, etc.
+        param_grid = {'n_factors': factors}
 
         # Handle models that require lr_all and reg_all (SVD and SVDpp)
-        if model_name == "SVD" or model_name == "SVDpp":
-            # Only for SVD and SVDpp, include lr_all and reg_all
+        if model_name in ["SVD", "SVDpp"]:
             try:
                 lr_values = [float(x.strip()) for x in self.lr_var.get().split(',')]
                 reg_values = [float(x.strip()) for x in self.reg_var.get().split(',')]
@@ -1889,12 +1903,8 @@ class EnhancedSVDRecommenderApp:
                 messagebox.showerror("Error", "Invalid parameter values for learning rate and regularization.")
                 return
         elif model_name == "NMF":
-            # For NMF, we don't use lr_all and reg_all, so just use n_factors
-            param_grid = {'n_factors': factors}
-        else:
-            # Handle other models with appropriate parameters
-            messagebox.showerror("Error", f"Model {model_name} is not supported for second optimization.")
-            return
+            # For NMF, we only need n_factors and n_epochs
+            param_grid['n_epochs'] = [best_params['n_epochs']]  # Use the best n_epochs from first round
 
         # Create GridSearchCV with the parameter grid
         try:
@@ -1910,16 +1920,26 @@ class EnhancedSVDRecommenderApp:
             best_rmse = gs.best_score['rmse']
             best_mae = gs.best_score['mae']
 
-            # Output the results to UI
-            self.update_status(
-                f"Optimization completed for {model_name}. Best RMSE: {best_rmse:.4f}, Best MAE: {best_mae:.4f}")
+            # Store results
+            self.best_params['second_round'] = best_params
 
-            # Update results display
-            self.opt_results_text.config(state=tk.NORMAL)
-            self.opt_results_text.insert(tk.END, f"Best Params: {best_params}\n")
-            self.opt_results_text.insert(tk.END, f"Best RMSE: {best_rmse:.4f}\n")
-            self.opt_results_text.insert(tk.END, f"Best MAE: {best_mae:.4f}\n")
-            self.opt_results_text.config(state=tk.DISABLED)
+            # Prepare data for visualization
+            param_combos = []
+            rmse_means = []
+            mae_means = []
+
+            for i, params in enumerate(gs.cv_results['params']):
+                param_str = f"factors={params['n_factors']}, epochs={best_params['n_epochs']}"
+                if model_name in ["SVD", "SVDpp"]:
+                    param_str += f", lr={params['lr_all']}, reg={params['reg_all']}"
+                param_combos.append(param_str)
+                rmse_means.append(gs.cv_results['mean_test_rmse'][i])
+                mae_means.append(gs.cv_results['mean_test_mae'][i])
+
+            # Update UI in main thread
+            self.root.after(0, lambda: self._update_optimization_results(
+                'second_round', model_name, best_params, best_rmse, best_mae,
+                param_combos, rmse_means, mae_means))
 
         except Exception as e:
             self.update_status(f"Error during second optimization: {str(e)}")
@@ -1949,12 +1969,27 @@ class EnhancedSVDRecommenderApp:
             rmse_means = []
             mae_means = []
 
-            # Get parameters from first round
+            # Get parameters from first round based on model type
             n_epochs = best_params['n_epochs']
 
-            # Initialize lr_all and reg_all based on model type
-            lr_all = best_params.get('lr_all') if model_name in ["SVD", "SVDpp"] else None
-            reg_all = best_params.get('reg_all')
+            # Handle model-specific parameters
+            if model_name == "NMF":
+                # NMF uses reg_pu and reg_qi instead of reg_all, and doesn't use lr_all
+                reg_pu = best_params.get('reg_pu', 0.06)
+                reg_qi = best_params.get('reg_qi', 0.06)
+                lr_all = None  # NMF doesn't use lr_all
+            elif model_name in ["SVD", "SVDpp"]:
+                # SVD and SVDpp use both lr_all and reg_all
+                lr_all = best_params.get('lr_all')
+                reg_all = best_params.get('reg_all')
+                reg_pu = None
+                reg_qi = None
+            else:
+                # For other models that might not use these parameters
+                lr_all = None
+                reg_all = None
+                reg_pu = None
+                reg_qi = None
 
             # Try each factor value
             for n_factors in factors:
@@ -1963,17 +1998,14 @@ class EnhancedSVDRecommenderApp:
 
                     # Create and train model based on model name
                     if model_name == "SVD":
-                        # SVD requires lr_all and reg_all
                         algo = SVD(n_factors=n_factors, n_epochs=n_epochs, lr_all=lr_all, reg_all=reg_all)
                     elif model_name == "SVDpp":
-                        # SVDpp requires lr_all and reg_all
                         algo = SVDpp(n_factors=n_factors, n_epochs=n_epochs, lr_all=lr_all, reg_all=reg_all)
                     elif model_name == "NMF":
-                        # NMF doesn't use lr_all or reg_all
-                        algo = NMF(n_factors=n_factors, n_epochs=n_epochs)
+                        # NMF doesn't use lr_all parameter and uses reg_pu, reg_qi instead of reg_all
+                        algo = NMF(n_factors=n_factors, n_epochs=n_epochs, reg_pu=reg_pu, reg_qi=reg_qi)
                     else:
                         print(f"Unknown model: {model_name}, using SVD as fallback")
-                        # Fallback to SVD if model type is unknown
                         algo = SVD(n_factors=n_factors, n_epochs=n_epochs, lr_all=lr_all, reg_all=reg_all)
 
                     # Train model
@@ -1987,11 +2019,11 @@ class EnhancedSVDRecommenderApp:
                     print(f"n_factors={n_factors}: RMSE={rmse:.4f}, MAE={mae:.4f}")
 
                     # Store results for this combination
-                    param_str = f"factors={n_factors}, epochs={n_epochs}"
-                    if model_name != "NMF" and lr_all is not None:
-                        param_str += f", lr={lr_all}"
-                    if reg_all is not None:
-                        param_str += f", reg={reg_all}"
+                    if model_name == "NMF":
+                        param_str = f"factors={n_factors}, epochs={n_epochs}, reg_pu={reg_pu}, reg_qi={reg_qi}"
+                    else:
+                        param_str = f"factors={n_factors}, epochs={n_epochs}, lr={lr_all}, reg={reg_all}"
+
                     param_combos.append(param_str)
                     rmse_means.append(rmse)
                     mae_means.append(mae)
@@ -2004,9 +2036,13 @@ class EnhancedSVDRecommenderApp:
                             'n_factors': n_factors,
                             'n_epochs': n_epochs
                         }
-                        if model_name != "NMF" and lr_all is not None:
+
+                        # Add model-specific parameters
+                        if model_name == "NMF":
+                            best_params_second['reg_pu'] = reg_pu
+                            best_params_second['reg_qi'] = reg_qi
+                        elif model_name in ["SVD", "SVDpp"]:
                             best_params_second['lr_all'] = lr_all
-                        if reg_all is not None:
                             best_params_second['reg_all'] = reg_all
 
                 except Exception as e:
@@ -2042,7 +2078,6 @@ class EnhancedSVDRecommenderApp:
             self.root.after(0,
                             lambda err=error_msg: messagebox.showerror("Error", f"Second optimization failed: {err}"))
 
-    def _run_manual_second_grid_search(self, model_name, best_params, factors):
         try:
             print("Running manual grid search for factors...")
 
@@ -2283,7 +2318,7 @@ class EnhancedSVDRecommenderApp:
                                lr_all=params.get('lr_all', 0.005),
                                reg_all=params.get('reg_all', 0.02))
                 else:
-                    algo = SVD()  # Create a new SVD instance
+                    algo = SVD()
             elif model_name == "SVDpp":
                 if use_optimized:
                     algo = SVDpp(n_factors=params.get('n_factors', 100),
@@ -2294,9 +2329,11 @@ class EnhancedSVDRecommenderApp:
                     algo = SVDpp()
             elif model_name == "NMF":
                 if use_optimized:
+                    # NMF uses separate regularization parameters
                     algo = NMF(n_factors=params.get('n_factors', 15),
                                n_epochs=params.get('n_epochs', 50),
-                               reg_all=params.get('reg_all', 0.06))
+                               reg_pu=params.get('reg_pu', 0.06),
+                               reg_qi=params.get('reg_qi', 0.06))
                 else:
                     algo = NMF()
             elif model_name == "KNNBasic":
@@ -3743,22 +3780,40 @@ class EnhancedSVDRecommenderApp:
                                     "KNNWithMeans": KNNWithMeans})).start()
 
         def _run_first_optimization_thread(self, model_name, epochs, lr_values, reg_values, models):
+            """Background thread for first optimization round"""
             try:
                 # Get the model class from the dictionary
                 algo_class = models[model_name]
 
-                # Define parameter grid
-                param_grid = {
-                    'n_epochs': epochs,
-                    'lr_all': lr_values,
-                    'reg_all': reg_values
-                }
+                # Define parameter grid based on the model
+                if model_name == "NMF":
+                    # For NMF, use different parameter names - it uses reg_pu, reg_qi, reg_bu, reg_bi instead of reg_all
+                    param_grid = {
+                        'n_epochs': epochs,
+                        'reg_pu': reg_values,  # regularization for user factors
+                        'reg_qi': reg_values  # regularization for item factors
+                    }
+                elif model_name in ["KNNBasic", "KNNWithMeans"]:
+                    # KNN models don't use these parameters
+                    param_grid = {}
+                    # For KNN models, we might want to optimize other parameters like k, sim_options, etc.
+                    # This is a simplified version - you might want to add KNN-specific parameters
+                    messagebox.showinfo("Info",
+                                        f"{model_name} doesn't require hyperparameter optimization for the selected parameters.")
+                    return
+                else:
+                    # For SVD and SVDpp, include all parameters
+                    param_grid = {
+                        'n_epochs': epochs,
+                        'lr_all': lr_values,
+                        'reg_all': reg_values
+                    }
 
-                # Create an instance of the model class for GridSearchCV
+                # Create GridSearchCV
                 gs = GridSearchCV(algo_class, param_grid, measures=['rmse', 'mae'], cv=3)
                 gs.fit(self.data)
 
-                # Get best params and scores
+                # Extract best params and scores
                 best_params = gs.best_params['rmse']
                 best_rmse = gs.best_score['rmse']
                 best_mae = gs.best_score['mae']
@@ -3774,10 +3829,13 @@ class EnhancedSVDRecommenderApp:
                 mae_means = []
 
                 for i, params in enumerate(cv_results['params']):
-                    param_str = f"epochs={params['n_epochs']}, lr={params['lr_all']}, reg={params['reg_all']}"
+                    if model_name == "NMF":
+                        param_str = f"epochs={params['n_epochs']}, reg={params['reg_all']}"
+                    else:
+                        param_str = f"epochs={params['n_epochs']}, lr={params.get('lr_all', 'N/A')}, reg={params['reg_all']}"
                     param_combos.append(param_str)
-                    rmse_means.append(cv_results['mean_rmse'][i])
-                    mae_means.append(cv_results['mean_mae'][i])
+                    rmse_means.append(cv_results['mean_test_rmse'][i])
+                    mae_means.append(cv_results['mean_test_mae'][i])
 
                 # Update UI in main thread
                 self.root.after(0, lambda: self._update_optimization_results(
@@ -3786,7 +3844,9 @@ class EnhancedSVDRecommenderApp:
 
             except Exception as e:
                 error_msg = str(e)
-                print(f"Error during optimization: {error_msg}")  # Debugging output
+                print(f"Error during optimization: {error_msg}")
+                import traceback
+                traceback.print_exc()
                 self.root.after(0, lambda err=error_msg: self.update_status(f"Error: {err}"))
                 self.root.after(0, lambda err=error_msg: messagebox.showerror("Error", f"Optimization failed: {err}"))
 
@@ -3927,50 +3987,122 @@ class EnhancedSVDRecommenderApp:
     def _run_second_optimization_thread(self, model_name, best_params, factors):
         """Background thread for second optimization round"""
         try:
-            # Build the full trainset to access the number of ratings
-            trainset = self.data.build_full_trainset()
-            num_ratings = trainset.n_ratings  # Access the number of ratings
+            print(f"Starting second optimization for model: {model_name}")
+            print(f"Best parameters from first round: {best_params}")
+            print(f"Factors to test: {factors}")
 
-            # Check data size
-            if num_ratings < 100:  # Adjust the threshold as needed
-                messagebox.showwarning("Warning", "Not enough ratings to perform optimization.")
-                return
+            # Import necessary modules
+            from surprise import SVD, SVDpp, NMF
+            from surprise.model_selection import train_test_split
+            from surprise import accuracy
 
-            # Define parameter grid with factors and best params from first round
-            param_grid = {
-                'n_factors': factors,
-                'n_epochs': [best_params['n_epochs']],
-                'lr_all': [best_params['lr_all']],
-                'reg_all': [best_params['reg_all']]
-            }
+            # Split data for evaluation
+            trainset, testset = train_test_split(self.data, test_size=0.25, random_state=42)
 
-            print(f"Running second optimization with parameters: {param_grid}")
+            # Initialize variables to track best results
+            best_rmse = float('inf')
+            best_mae = float('inf')
+            best_params_second = None
 
-            # Create an instance of the model class for GridSearchCV
-            algo_class = SVD if model_name == "SVD" else SVDpp if model_name == "SVDpp" else NMF
-
-            # Run GridSearchCV
-            gs = GridSearchCV(algo_class, param_grid, measures=['rmse', 'mae'], cv=3)
-            gs.fit(self.data)
-
-            # Extract best parameters and scores
-            best_params_second = gs.best_params['rmse']
-            best_rmse = gs.best_score['rmse']
-            best_mae = gs.best_score['mae']
-
-            # Store results
-            self.best_params['second_round'] = best_params_second
-
-            # Prepare data for visualization
+            # Store results for visualization
             param_combos = []
             rmse_means = []
             mae_means = []
 
-            for i, params in enumerate(gs.cv_results['params']):
-                param_str = f"factors={params['n_factors']}, epochs={params['n_epochs']}, lr={params['lr_all']}, reg={params['reg_all']}"
-                param_combos.append(param_str)
-                rmse_means.append(gs.cv_results['mean_test_rmse'][i])
-                mae_means.append(gs.cv_results['mean_test_mae'][i])
+            # Get parameters from first round based on model type
+            n_epochs = best_params['n_epochs']
+
+            # Handle model-specific parameters
+            if model_name == "NMF":
+                # NMF uses reg_pu and reg_qi instead of reg_all, and doesn't use lr_all
+                reg_pu = best_params.get('reg_pu')
+                reg_qi = best_params.get('reg_qi')
+                lr_all = None  # NMF doesn't use lr_all
+            elif model_name in ["SVD", "SVDpp"]:
+                # SVD and SVDpp use both lr_all and reg_all
+                lr_all = best_params.get('lr_all')
+                reg_all = best_params.get('reg_all')
+                reg_pu = None
+                reg_qi = None
+            else:
+                # For other models that might not use these parameters
+                lr_all = None
+                reg_all = None
+                reg_pu = None
+                reg_qi = None
+
+            # Try each factor value
+            for n_factors in factors:
+                try:
+                    print(f"Testing n_factors={n_factors}")
+
+                    # Create and train model based on model name
+                    if model_name == "SVD":
+                        algo = SVD(n_factors=n_factors, n_epochs=n_epochs, lr_all=lr_all, reg_all=reg_all)
+                    elif model_name == "SVDpp":
+                        algo = SVDpp(n_factors=n_factors, n_epochs=n_epochs, lr_all=lr_all, reg_all=reg_all)
+                    elif model_name == "NMF":
+                        # NMF doesn't use lr_all parameter and uses reg_pu, reg_qi instead of reg_all
+                        algo = NMF(n_factors=n_factors, n_epochs=n_epochs, reg_pu=reg_pu, reg_qi=reg_qi)
+                    else:
+                        print(f"Unknown model: {model_name}, using SVD as fallback")
+                        algo = SVD(n_factors=n_factors, n_epochs=n_epochs, lr_all=lr_all, reg_all=reg_all)
+
+                    # Train model
+                    algo.fit(trainset)
+
+                    # Test model
+                    predictions = algo.test(testset)
+                    rmse = accuracy.rmse(predictions)
+                    mae = accuracy.mae(predictions)
+
+                    print(f"n_factors={n_factors}: RMSE={rmse:.4f}, MAE={mae:.4f}")
+
+                    # Store results for this combination
+                    if model_name == "NMF":
+                        param_str = f"factors={n_factors}, epochs={n_epochs}, reg_pu={reg_pu}, reg_qi={reg_qi}"
+                    else:
+                        param_str = f"factors={n_factors}, epochs={n_epochs}, lr={lr_all}, reg={reg_all}"
+
+                    param_combos.append(param_str)
+                    rmse_means.append(rmse)
+                    mae_means.append(mae)
+
+                    # Update best parameters if this is better
+                    if rmse < best_rmse:
+                        best_rmse = rmse
+                        best_mae = mae
+                        best_params_second = {
+                            'n_factors': n_factors,
+                            'n_epochs': n_epochs
+                        }
+
+                        # Add model-specific parameters
+                        if model_name == "NMF":
+                            best_params_second['reg_pu'] = reg_pu
+                            best_params_second['reg_qi'] = reg_qi
+                        elif model_name in ["SVD", "SVDpp"]:
+                            best_params_second['lr_all'] = lr_all
+                            best_params_second['reg_all'] = reg_all
+
+                except Exception as e:
+                    print(f"Error with n_factors={n_factors}: {e}")
+                    import traceback
+                    traceback.print_exc()
+                    # Add dummy results for failed combinations
+                    param_str = f"factors={n_factors} (failed)"
+                    param_combos.append(param_str)
+                    rmse_means.append(None)
+                    mae_means.append(None)
+
+            if best_params_second is None:
+                raise Exception("All factor values failed")
+
+            print(f"Best parameters found: {best_params_second}")
+            print(f"Best RMSE: {best_rmse}, Best MAE: {best_mae}")
+
+            # Store results
+            self.best_params['second_round'] = best_params_second
 
             # Update UI in main thread
             self.root.after(0, lambda: self._update_optimization_results(
@@ -3978,10 +4110,13 @@ class EnhancedSVDRecommenderApp:
                 param_combos, rmse_means, mae_means))
 
         except Exception as e:
-            print(f"Error during second optimization: {e}")  # Debugging output
-            self.root.after(0, lambda err=str(e): self.update_status(f"Error: {err}"))
-            self.root.after(0, lambda err=str(e): messagebox.showerror("Error", f"Optimization failed: {err}"))
-
+            error_msg = str(e)
+            print(f"Error in second optimization thread: {error_msg}")
+            import traceback
+            traceback.print_exc()
+            self.root.after(0, lambda err=error_msg: self.update_status(f"Error: {err}"))
+            self.root.after(0,
+                            lambda err=error_msg: messagebox.showerror("Error", f"Second optimization failed: {err}"))
 
     def train_final_model(self):
         """Train final model with best parameters"""
@@ -4011,7 +4146,7 @@ class EnhancedSVDRecommenderApp:
     def _train_final_model_thread(self, model_name, use_optimized, params=None):
         """Background thread for training final model"""
         try:
-            # Create model
+            # Create model - FIXED VERSION
             if model_name == "SVD":
                 if use_optimized:
                     algo = SVD(n_factors=params.get('n_factors', 100),
@@ -4030,15 +4165,21 @@ class EnhancedSVDRecommenderApp:
                     algo = SVDpp()
             elif model_name == "NMF":
                 if use_optimized:
+                    # NMF doesn't use lr_all parameter and uses reg_pu, reg_qi instead of reg_all
                     algo = NMF(n_factors=params.get('n_factors', 15),
                                n_epochs=params.get('n_epochs', 50),
-                               reg_all=params.get('reg_all', 0.06))
+                               reg_pu=params.get('reg_pu', 0.06),
+                               reg_qi=params.get('reg_qi', 0.06))
                 else:
                     algo = NMF()
             elif model_name == "KNNBasic":
                 algo = KNNBasic()
             elif model_name == "KNNWithMeans":
                 algo = KNNWithMeans()
+            elif model_name == "SlopeOne":
+                algo = SlopeOne()
+            elif model_name == "CoClustering":
+                algo = CoClustering()
             else:
                 algo = SVD()  # Default fallback
 
@@ -4076,7 +4217,6 @@ class EnhancedSVDRecommenderApp:
             error_msg = str(e)
             self.root.after(0, lambda err=error_msg: self.update_status(f"Error: {err}"))
             self.root.after(0, lambda err=error_msg: messagebox.showerror("Error", f"Training failed: {err}"))
-
     def _update_final_model_ui(self, model_name, rmse, mae, train_time, use_optimized,
                                best_predictions, worst_predictions):
         """Update UI after final model training"""
