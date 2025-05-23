@@ -1430,7 +1430,7 @@ class EnhancedSVDRecommenderApp:
                 # Update UI in main thread
             self.root.after(0, lambda: self._update_evaluation_results(model_name, results))
 
-            except Exception as e:
+        except Exception as e:
             error_msg = str(e)
             self.root.after(0, lambda err=error_msg: self.update_status(f"Error: {err}"))
             self.root.after(0, lambda err=error_msg: messagebox.showerror("Error", f"Evaluation failed: {err}"))
