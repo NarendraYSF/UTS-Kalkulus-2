@@ -17,6 +17,14 @@ import hashlib
 import pickle
 import json
 from datetime import datetime
+import ctypes
+try:
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)  # for Windows 8.1 or later
+except Exception:
+    try:
+        ctypes.windll.user32.SetProcessDPIAware()  # for Windows 7
+    except Exception:
+        pass
 
 # Set page configuration
 st.set_page_config(

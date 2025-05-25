@@ -14,6 +14,14 @@ from tkinter import ttk, scrolledtext, messagebox
 from tkinter.font import Font
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib
+import ctypes
+try:
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)  # for Windows 8.1 or later
+except Exception:
+    try:
+        ctypes.windll.user32.SetProcessDPIAware()  # for Windows 7
+    except Exception:
+        pass
 
 matplotlib.use('TkAgg')
 warnings.filterwarnings('ignore')
