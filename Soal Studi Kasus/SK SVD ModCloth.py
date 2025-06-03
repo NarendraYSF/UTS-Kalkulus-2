@@ -94,7 +94,6 @@ Data input terdiri dari rating yang diberikan oleh pengguna terhadap produk-prod
 
 ===============================================================================
 """
-
 #region
 import numpy as np
 import pandas as pd

@@ -138,7 +138,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from surprise import SVD, SVDpp, SlopeOne, NMF, CoClustering, KNNBasic, KNNWithMeans, KNNWithZScore
+from    surprise import SVD, SVDpp, SlopeOne, NMF, CoClustering, KNNBasic, KNNWithMeans, KNNWithZScore
 from surprise import Dataset, Reader
 from surprise.model_selection import cross_validate, GridSearchCV
 from surprise.model_selection import train_test_split
@@ -161,12 +161,17 @@ import io
 from PIL import Image, ImageTk
 import random
 import json
-
-
+import ctypes
+try:
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)  # for Windows 8.1 or later
+except Exception:
+    try:
+        ctypes.windll.user32.SetProcessDPIAware()  # for Windows 7
+    except Exception:
+        pass
 matplotlib.use('TkAgg')
 warnings.filterwarnings('ignore')
 #endregion
-
 class EnhancedSVDRecommenderApp:
     def __init__(self, root):
         self.root = root

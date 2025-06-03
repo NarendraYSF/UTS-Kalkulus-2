@@ -154,6 +154,14 @@ from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import warnings
+import ctypes
+try:
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)  # for Windows 8.1 or later
+except Exception:
+    try:
+        ctypes.windll.user32.SetProcessDPIAware()  # for Windows 7
+    except Exception:
+        pass
 #endregion
 
 warnings.filterwarnings('ignore')
@@ -4609,7 +4617,7 @@ class EnhancedAplikasiPrediksiHargaEmas:
                                    "Install dengan: pip install reportlab")
         except Exception as e:
             messagebox.showerror("Error", f"Gagal export PDF: {str(e)}")
-            
+
     # === Utility Methods ===
 
     def buat_tooltip(self, widget, text):

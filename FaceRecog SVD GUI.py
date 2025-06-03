@@ -161,6 +161,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from skimage import exposure
 import seaborn as sns
+import ctypes
+try:
+    ctypes.windll.shcore.SetProcessDpiAwareness(1)  # for Windows 8.1 or later
+except Exception:
+    try:
+        ctypes.windll.user32.SetProcessDPIAware()  # for Windows 7
+    except Exception:
+        pass
 #endregion
 
 class PengenalWajahSVDLanjutan:
