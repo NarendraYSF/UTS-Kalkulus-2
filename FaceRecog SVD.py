@@ -1,3 +1,128 @@
+"""
+===============================================================================
+                            Dokumentasi Kode
+===============================================================================
+
+Judul: Pengenalan Wajah dengan Singular Value Decomposition (SVD)
+Deskripsi:
+    Skrip ini mengimplementasikan pengenalan wajah menggunakan metode Singular
+    Value Decomposition (SVD), dengan fokus pada proyeksi dan rekonstruksi gambar
+    wajah. Skrip ini mencakup normalisasi pencahayaan gambar, pelatihan model SVD,
+    prediksi identitas wajah menggunakan k-nearest neighbors, serta evaluasi kinerja
+    menggunakan akurasi dan confusion matrix. Selain itu, dilakukan juga eksperimen
+    untuk membandingkan berbagai metode normalisasi pencahayaan dan pengaruh jumlah
+    komponen SVD terhadap akurasi model.
+
+Penulis: Narendra Yusuf 未来
+Tanggal: May 27 2025
+Versi: 1.0
+
+===============================================================================
+                            Deskripsi Data
+===============================================================================
+
+Data input yang digunakan terdiri dari gambar wajah grayscale yang disusun dalam
+format dataset dengan setiap gambar terkait dengan label identitas (misalnya, setiap
+folder di direktori menyimpan gambar dari satu individu).
+
+Terdapat dua data utama:
+    - Gambar wajah (yang disusun dalam matriks 2D per individu)
+    - Label identitas individu yang bersesuaian dengan setiap gambar.
+
+===============================================================================
+                            Ikhtisar Fungsionalitas
+===============================================================================
+
+1. Normalisasi Pencahayaan:
+    - Skrip ini mencakup beberapa metode normalisasi pencahayaan untuk meningkatkan
+      kualitas gambar wajah sebelum dilakukan pengenalan. Metode yang digunakan adalah
+      histogram equalization, CLAHE, dan koreksi gamma.
+
+2. Pelatihan Model SVD:
+    - Pada tahap pelatihan, gambar wajah akan didekomposisi menggunakan SVD untuk
+      menghasilkan komponen eigen (singular components). Data gambar yang telah
+      dinormalisasi digunakan untuk melatih model.
+
+3. Prediksi Identitas Wajah:
+    - Model yang telah dilatih kemudian digunakan untuk memprediksi identitas wajah
+      pada gambar uji dengan menggunakan pendekatan k-nearest neighbors berdasarkan
+      jarak Euclidean antar proyeksi wajah.
+
+4. Rekonstruksi Wajah:
+    - Wajah yang diproyeksikan melalui komponen singular SVD dapat direkonstruksi
+      kembali untuk visualisasi hasil pengenalan dan proyeksi wajah.
+
+5. Evaluasi:
+    - Akurasi model dihitung dengan membandingkan prediksi model terhadap label asli.
+      Confusion matrix juga dihitung untuk memeriksa distribusi kesalahan prediksi.
+
+6. Eksperimen:
+    - Skrip ini menguji berbagai metode normalisasi pencahayaan dan membandingkan
+      akurasi model menggunakan jumlah komponen SVD yang berbeda. Hasilnya divisualisasikan
+      dalam bentuk grafik untuk analisis lebih lanjut.
+
+7. Visualisasi:
+    - Hasil akhir dari SVD dan komponen eigen (eigenfaces) divisualisasikan untuk
+      menunjukkan fitur utama yang digunakan dalam proses pengenalan wajah.
+
+===============================================================================
+                            Pembagian Kode
+===============================================================================
+
+1. Kelas PengenalWajahSVD:
+    - Kelas ini mengimplementasikan model pengenalan wajah berbasis SVD, yang mencakup
+      metode untuk pelatihan (`latih`), prediksi (`prediksi`), rekonstruksi wajah
+      (`rekonstruksi_wajah`), serta normalisasi gambar (`normalisasi_pencahayaan`).
+
+2. Fungsi `muat_dataset_wajah`:
+    - Fungsi ini memuat dataset gambar wajah dari folder yang ada dalam direktori,
+      di mana setiap subfolder mewakili identitas individu, dan gambar-gambar dalam
+      subfolder tersebut merupakan gambar wajah orang tersebut.
+
+3. Fungsi `tampilkan_hasil`:
+    - Fungsi ini digunakan untuk menampilkan hasil evaluasi model, termasuk akurasi
+      prediksi, confusion matrix, serta beberapa contoh gambar asli, gambar normalisasi,
+      dan gambar yang telah direkonstruksi oleh model.
+
+4. Fungsi `simulasi_pencahayaan`:
+    - Fungsi ini mengubah intensitas pencahayaan gambar untuk mensimulasikan variasi
+      pencahayaan, yang dapat digunakan untuk menguji robusta model terhadap perubahan
+      pencahayaan.
+
+5. Fungsi `demo`:
+    - Fungsi ini menyediakan demo lengkap yang mencakup pembuatan data dummy, pelatihan
+      model, prediksi, evaluasi, serta perbandingan berbagai metode normalisasi dan
+      jumlah komponen SVD terhadap akurasi. Fungsi ini juga mencakup visualisasi
+      hasil akhir.
+
+===============================================================================
+                            Instruksi Penggunaan
+===============================================================================
+
+1. Pastikan dataset wajah sudah siap dalam struktur direktori, dengan setiap folder
+   berisi gambar wajah dari satu individu.
+
+2. Jalankan skrip untuk memuat dataset dan melatih model pengenalan wajah. Model akan
+   dilatih menggunakan Singular Value Decomposition (SVD) pada data wajah yang sudah
+   dinormalisasi.
+
+3. Gunakan fungsi `latih` untuk melatih model pada data wajah yang disediakan, dan
+   fungsi `prediksi` untuk melakukan prediksi terhadap gambar wajah uji.
+
+4. Hasil evaluasi (akurasi dan confusion matrix) dapat dilihat melalui fungsi
+   `tampilkan_hasil`.
+
+5. Anda juga dapat bereksperimen dengan mengubah jumlah komponen SVD yang digunakan
+   pada model untuk melihat pengaruhnya terhadap akurasi.
+
+6. Jika Anda ingin menguji berbagai metode normalisasi pencahayaan atau memvisualisasikan
+   pengaruhnya terhadap hasil, Anda dapat menggunakan parameter yang sesuai di fungsi
+   `latih` dan `prediksi`.
+
+===============================================================================
+"""
+
+#region
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -7,6 +132,7 @@ import os
 from skimage import exposure
 from PIL import Image
 import matplotlib.cm as cm
+#endregion
 
 
 class PengenalWajahSVD:

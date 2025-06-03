@@ -1,3 +1,150 @@
+"""
+===============================================================================
+                            Dokumentasi Kode
+===============================================================================
+
+Judul: Aplikasi Pengenalan Wajah dengan Singular Value Decomposition (SVD) dan GUI
+Deskripsi:
+    Skrip ini mengimplementasikan aplikasi pengenalan wajah berbasis Singular
+    Value Decomposition (SVD) dengan antarmuka pengguna grafis (GUI). Aplikasi
+    ini memungkinkan pengguna untuk melatih model pengenalan wajah, melakukan
+    prediksi identitas wajah dari gambar atau video, serta melakukan analisis
+    terkait komponen SVD yang digunakan untuk pengenalan wajah.
+
+    Fitur yang disediakan oleh aplikasi termasuk:
+    - Preprocessing gambar dengan berbagai metode normalisasi
+    - Deteksi wajah menggunakan metode Haar Cascade
+    - Pelatihan model pengenalan wajah menggunakan SVD
+    - Prediksi identitas wajah dengan k-nearest neighbors
+    - Evaluasi model menggunakan metrik akurasi dan confusion matrix
+    - Analisis pengaruh jumlah komponen SVD terhadap akurasi model
+    - Visualisasi eigenfaces dan hasil evaluasi model
+
+Penulis: Narendra Yusuf 未来
+Tanggal: May 22 2025
+Versi: 1.0
+
+===============================================================================
+                            Deskripsi Data
+===============================================================================
+
+Data input yang digunakan terdiri dari gambar wajah grayscale yang disusun dalam
+format dataset, dengan setiap gambar terkait dengan label identitas (misalnya, setiap
+folder di direktori menyimpan gambar dari satu individu).
+
+Data utama:
+    - Gambar wajah (gambar yang disusun dalam matriks 2D per individu)
+    - Label identitas individu yang bersesuaian dengan setiap gambar.
+
+===============================================================================
+                            Ikhtisar Fungsionalitas
+===============================================================================
+
+1. Preprocessing Gambar:
+    - Gambar wajah yang dimasukkan akan diproses menggunakan berbagai metode normalisasi
+      intensitas, seperti histogram equalization, CLAHE, dan koreksi gamma untuk meningkatkan
+      kualitas gambar sebelum dilakukan pengenalan.
+
+2. Deteksi Wajah:
+    - Aplikasi ini menggunakan deteksi wajah berbasis Haar Cascade untuk menemukan wajah
+      dalam gambar atau video, hanya wajah yang terdeteksi yang digunakan untuk pelatihan
+      atau prediksi.
+
+3. Pelatihan Model SVD:
+    - Aplikasi melatih model pengenalan wajah menggunakan SVD dengan data wajah yang telah
+      dinormalisasi. Komponen utama dari SVD digunakan untuk proyeksi data ke ruang eigen.
+
+4. Prediksi Identitas Wajah:
+    - Aplikasi ini dapat memprediksi identitas wajah yang terdeteksi dengan membandingkan
+      proyeksi wajah pada data uji dengan data pelatihan yang telah dilatih menggunakan
+      SVD dan k-nearest neighbors.
+
+5. Evaluasi Model:
+    - Setelah pelatihan, aplikasi ini dapat mengevaluasi model dengan menghitung akurasi
+      dan confusion matrix pada data uji. Confidence interval juga dihitung untuk mengevaluasi
+      sejauh mana model yakin terhadap prediksinya.
+
+6. Analisis Komponen:
+    - Aplikasi memungkinkan pengguna untuk menganalisis pengaruh jumlah komponen SVD terhadap
+      akurasi model pengenalan wajah dengan menguji berbagai jumlah komponen.
+
+7. Visualisasi Eigenfaces:
+    - Eigenfaces, yang merupakan komponen utama dari SVD, divisualisasikan untuk memberikan
+      pemahaman lebih baik tentang fitur-fitur yang digunakan dalam proses pengenalan wajah.
+
+8. Antarmuka Pengguna (GUI):
+    - GUI memungkinkan pengguna untuk memuat dataset wajah, melatih model, melakukan
+      prediksi wajah menggunakan gambar atau kamera, serta menganalisis dan memvisualisasikan
+      hasil pelatihan model dengan cara yang interaktif.
+
+===============================================================================
+                            Pembagian Kode
+===============================================================================
+
+1. Kelas PengenalWajahSVDLanjutan:
+    - Kelas ini bertanggung jawab untuk menangani semua fungsi utama terkait pengenalan wajah
+      menggunakan SVD, termasuk preprocessing gambar, deteksi wajah, pelatihan model, prediksi,
+      evaluasi model, dan visualisasi eigenfaces.
+
+2. Fungsi Preprocessing Gambar:
+    - Fungsi ini melakukan preprocessing pada gambar dengan berbagai metode normalisasi intensitas
+      untuk mempersiapkan gambar sebelum proses pengenalan wajah.
+
+3. Fungsi Deteksi Wajah:
+    - Fungsi ini bertugas untuk mendeteksi wajah dalam gambar menggunakan metode Haar Cascade dan
+      mengembalikan bagian wajah yang terdeteksi.
+
+4. Fungsi Latih Model:
+    - Fungsi ini melatih model pengenalan wajah dengan melakukan SVD pada data wajah yang telah
+      dinormalisasi dan mengurangi rata-rata wajah (mean face) untuk setiap gambar.
+
+5. Fungsi Prediksi Identitas:
+    - Fungsi ini digunakan untuk memprediksi identitas wajah yang terdeteksi dengan membandingkan
+      wajah yang diproyeksikan dengan data pelatihan dan menghitung jarak untuk mencari tetangga terdekat.
+
+6. Fungsi Evaluasi Model:
+    - Fungsi ini mengevaluasi akurasi model dengan menggunakan data uji dan menghitung metrik evaluasi seperti
+      akurasi, confusion matrix, dan rata-rata confidence.
+
+7. Kelas AplikasiPengenalWajahGUI:
+    - Kelas ini menangani antarmuka pengguna grafis (GUI) dan interaksi dengan pengguna, seperti memuat dataset,
+      melatih model, melakukan prediksi, dan menampilkan hasil evaluasi atau visualisasi eigenfaces.
+
+8. Fungsi-fungsi GUI:
+    - Fungsi-fungsi ini mengonfigurasi elemen-elemen dalam GUI, termasuk tombol, label, dan canvas untuk
+      menampilkan gambar dan informasi hasil prediksi atau evaluasi.
+
+9. Fungsi Simulasi dan Analisis:
+    - Fungsi-fungsi ini memungkinkan simulasi penggunaan kamera untuk pengenalan wajah secara real-time, serta
+      analisis pengaruh jumlah komponen SVD terhadap akurasi model.
+
+===============================================================================
+                            Instruksi Penggunaan
+===============================================================================
+
+1. Pastikan dataset wajah sudah siap dan disusun dalam direktori, dengan setiap folder berisi
+   gambar wajah dari satu individu.
+
+2. Jalankan aplikasi GUI untuk memuat dataset wajah, melatih model, dan melakukan prediksi pada gambar
+   atau video menggunakan kamera.
+
+3. Pilih metode normalisasi gambar yang sesuai sebelum melatih model atau melakukan prediksi untuk
+   meningkatkan hasil pengenalan wajah.
+
+4. Evaluasi hasil pelatihan dengan melihat akurasi, confusion matrix, dan visualisasi komponen
+   eigenfaces.
+
+5. Eksperimen dengan jumlah komponen SVD yang berbeda untuk melihat pengaruhnya terhadap akurasi
+   pengenalan wajah.
+
+6. Untuk melakukan pengenalan wajah secara real-time, buka kamera dan pilih gambar wajah untuk diprediksi.
+
+7. Gunakan fitur analisis untuk mengevaluasi performa model dan mengeksplorasi pengaruh berbagai
+   parameter terhadap hasil akhir.
+
+===============================================================================
+"""
+#region
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
@@ -14,7 +161,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from skimage import exposure
 import seaborn as sns
-
+#endregion
 
 class PengenalWajahSVDLanjutan:
     """

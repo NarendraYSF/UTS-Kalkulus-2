@@ -1,3 +1,136 @@
+"""
+===============================================================================
+                            Dokumentasi Kode
+===============================================================================
+
+Judul: Aplikasi Prediksi Harga Emas dengan SVD
+Deskripsi:
+    Skrip ini adalah aplikasi yang dirancang untuk memprediksi harga emas berdasarkan
+    analisis historis dan berbagai faktor ekonomi. Aplikasi ini menggunakan Singular
+    Value Decomposition (SVD) untuk menganalisis data historis dan menghitung prediksi
+    harga emas di masa depan berdasarkan variabel-variabel seperti inflasi, suku bunga,
+    dan indeks USD.
+
+    Fitur utama aplikasi meliputi:
+    - Pengolahan data historis untuk memasukkan variabel ekonomi yang relevan
+    - Prediksi harga emas menggunakan berbagai model regresi
+    - Analisis sensitivitas terhadap perubahan parameter ekonomi
+    - Visualisasi data dan hasil analisis dalam bentuk grafik dan tabel
+    - Kemampuan untuk memperbarui data secara dinamis dan melakukan optimasi model
+
+Penulis: Narendra Yusuf 未来
+Tanggal: May 20 2025
+Versi: 2.1
+
+===============================================================================
+                            Deskripsi Data
+===============================================================================
+
+Data input yang digunakan terdiri dari informasi historis terkait inflasi, suku bunga,
+indeks USD, dan harga emas:
+    - 'tahun': Tahun data historis
+    - 'inflasi': Tingkat inflasi per tahun
+    - 'suku_bunga': Tingkat suku bunga yang berlaku
+    - 'indeks_usd': Indeks kekuatan dolar Amerika Serikat
+    - 'harga_emas': Harga emas per ons dalam USD
+
+Data ini digunakan untuk membangun model prediksi harga emas, serta untuk analisis
+sensitivitas terhadap perubahan parameter ekonomi.
+
+===============================================================================
+                            Ikhtisar Fungsionalitas
+===============================================================================
+
+1. **Pengolahan Data Historis**:
+    - Data historis digunakan untuk menghitung harga emas berdasarkan berbagai faktor ekonomi.
+    - Aplikasi menyediakan antarmuka untuk memuat dan memperbarui data historis.
+
+2. **Model Prediksi**:
+    - Berdasarkan data historis, aplikasi membangun model prediksi harga emas menggunakan regresi linier dan model SVD.
+    - Pengguna dapat memilih model untuk digunakan dalam prediksi harga emas masa depan.
+
+3. **Analisis Sensitivitas**:
+    - Aplikasi menyediakan analisis sensitivitas untuk mengevaluasi bagaimana perubahan dalam parameter ekonomi (inflasi, suku bunga, indeks USD) mempengaruhi prediksi harga emas.
+    - Hasil analisis sensitivitas dapat divisualisasikan untuk pemahaman lebih mendalam.
+
+4. **Optimasi dan Validasi Model**:
+    - Aplikasi menggunakan teknik validasi silang dan perbandingan model untuk memilih model terbaik yang memberikan hasil prediksi yang akurat.
+    - Model yang digunakan dapat disesuaikan dengan parameter yang berbeda.
+
+5. **Visualisasi Hasil**:
+    - Grafik interaktif digunakan untuk memvisualisasikan data historis, prediksi harga emas, serta hasil analisis sensitivitas dan model perbandingan.
+
+6. **Antarmuka Pengguna (GUI)**:
+    - Antarmuka grafis (GUI) yang intuitif memungkinkan pengguna untuk mengimpor data, memilih model prediksi, dan memvisualisasikan hasil analisis.
+    - Pengguna dapat memilih tema antarmuka (terang atau gelap) sesuai preferensi mereka.
+
+7. **Fitur Auto-Save**:
+    - Aplikasi dapat menyimpan pengaturan dan hasil secara otomatis pada interval waktu tertentu untuk memastikan data tidak hilang.
+
+8. **Pengaturan Tema dan Bahasa**:
+    - Aplikasi memungkinkan pengaturan tema (gelap atau terang) serta bahasa antarmuka yang dapat disesuaikan.
+
+===============================================================================
+                            Pembagian Kode
+===============================================================================
+
+1. **Kelas EnhancedAplikasiPrediksiHargaEmas**:
+    - Kelas utama yang menangani antarmuka pengguna (GUI) dan logika aplikasi. Di dalamnya termasuk
+      metode untuk memuat data, memilih model, menjalankan prediksi, serta menampilkan hasil evaluasi dan
+      visualisasi data.
+
+2. **Fungsi untuk Menangani Data**:
+    - Fungsi yang mengimpor dan mengekspor data, serta memperbarui dan mengelola data historis yang digunakan untuk
+      pelatihan model prediksi.
+
+3. **Fungsi Prediksi**:
+    - Fungsi untuk menjalankan prediksi harga emas berdasarkan input variabel ekonomi dan model yang dipilih.
+
+4. **Fungsi Analisis Sensitivitas**:
+    - Fungsi untuk melakukan analisis sensitivitas terhadap perubahan parameter ekonomi, serta menghasilkan
+      visualisasi dan laporan analisis.
+
+5. **Fungsi Optimasi Model**:
+    - Fungsi untuk membandingkan berbagai model dan memilih yang terbaik menggunakan teknik validasi silang (cross-validation) dan perbandingan model.
+
+6. **Fungsi Visualisasi**:
+    - Fungsi untuk membuat grafik dan plot yang menggambarkan data historis, hasil prediksi, dan analisis sensitivitas.
+
+7. **Pengaturan Aplikasi**:
+    - Aplikasi menyediakan pengaturan untuk memilih tema (terang atau gelap), mengaktifkan fitur auto-save, dan memilih bahasa antarmuka.
+
+===============================================================================
+                            Instruksi Penggunaan
+===============================================================================
+
+1. **Menjalankan Aplikasi**:
+    - Buka aplikasi dan pilih data historis yang akan digunakan untuk pelatihan model prediksi harga emas.
+    - Pilih model yang ingin digunakan untuk prediksi, baik regresi linier atau model berbasis SVD.
+
+2. **Melakukan Prediksi**:
+    - Masukkan parameter ekonomi untuk tahun yang diinginkan (misalnya, inflasi, suku bunga, dan indeks USD) untuk melakukan prediksi harga emas.
+    - Hasil prediksi akan ditampilkan di antarmuka aplikasi, dan grafik visualisasi akan menunjukkan hasilnya.
+
+3. **Analisis Sensitivitas**:
+    - Gunakan tab analisis untuk mengevaluasi bagaimana perubahan parameter ekonomi mempengaruhi prediksi harga emas.
+    - Hasil analisis sensitivitas akan disajikan dalam bentuk tabel dan grafik.
+
+4. **Optimasi Model**:
+    - Aplikasi secara otomatis akan mengoptimalkan model menggunakan teknik validasi silang untuk memilih model terbaik berdasarkan metrik evaluasi yang relevan.
+
+5. **Visualisasi Data**:
+    - Gunakan grafik interaktif untuk melihat data historis, hasil prediksi, serta analisis sensitivitas dalam bentuk plot.
+    - Anda juga dapat mengekspor grafik dalam format yang diinginkan untuk presentasi atau laporan.
+
+6. **Pengaturan Tema**:
+    - Aplikasi memungkinkan Anda untuk memilih antara tema terang atau gelap untuk pengalaman pengguna yang lebih baik.
+
+7. **Auto-Save**:
+    - Aplikasi secara otomatis menyimpan hasil dan pengaturan pada interval waktu tertentu (default setiap 5 menit), yang dapat disesuaikan melalui pengaturan aplikasi.
+
+===============================================================================
+"""
+#region
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
@@ -21,6 +154,7 @@ from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import warnings
+#endregion
 
 warnings.filterwarnings('ignore')
 
@@ -3018,71 +3152,1464 @@ class EnhancedAplikasiPrediksiHargaEmas:
                   font=("Arial", 14)).pack(pady=50)
 
     def buat_tab_teori(self):
-        """Membuat tab teori dengan panduan yang diperluas"""
+        """Membuat tab teori dengan panduan yang diperluas dan estetik"""
         bingkai = ttk.Frame(self.tab_teori)
         bingkai.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        teks_teori = """
-        # 🔬 Teori Singular Value Decomposition (SVD)
+        # Header dengan judul dan navigasi
+        header_frame = ttk.Frame(bingkai)
+        header_frame.pack(fill=tk.X, pady=(0, 10))
 
-        ## Pengantar
-        SVD adalah teknik faktorisasi matriks yang sangat powerful untuk analisis data.
-        Dalam konteks prediksi harga emas, SVD membantu kita:
+        title_label = ttk.Label(header_frame, text="📚 Teori & Panduan Aplikasi",
+                                font=("Arial", 16, "bold"))
+        title_label.pack(side=tk.LEFT)
 
-        1. **Reduksi Dimensi**: Mengurangi kompleksitas data tanpa kehilangan informasi penting
-        2. **Noise Reduction**: Menghilangkan noise dari data historis
-        3. **Pattern Recognition**: Mengidentifikasi pola tersembunyi dalam data
+        # Search box
+        search_frame = ttk.Frame(header_frame)
+        search_frame.pack(side=tk.RIGHT)
 
-        ## Formula Matematika
+        ttk.Label(search_frame, text="🔍 Cari:").pack(side=tk.LEFT, padx=(0, 5))
+        self.search_var = tk.StringVar()
+        search_entry = ttk.Entry(search_frame, textvariable=self.search_var, width=20)
+        search_entry.pack(side=tk.LEFT, padx=(0, 5))
+        search_entry.bind('<KeyRelease>', self.search_theory_content)
 
-        Untuk matriks M (m×n), SVD memberikan:
-        **M = UΣV^T**
+        ttk.Button(search_frame, text="🔄", command=self.reset_theory_search, width=3).pack(side=tk.LEFT)
 
-        Dimana:
-        - **U**: Matriks vektor singular kiri (m×m)
-        - **Σ**: Matriks diagonal nilai singular (m×n)  
-        - **V^T**: Transpose matriks vektor singular kanan (n×n)
+        # Main content menggunakan PanedWindow
+        main_paned = ttk.PanedWindow(bingkai, orient=tk.HORIZONTAL)
+        main_paned.pack(fill=tk.BOTH, expand=True)
 
-        ## Implementasi dalam Prediksi Harga Emas
+        # Left panel - Table of Contents
+        toc_frame = ttk.LabelFrame(main_paned, text="📑 Daftar Isi", width=250)
+        main_paned.add(toc_frame, weight=1)
 
-        ### Langkah 1: Persiapan Matriks
-        ```
-        M = [inflasi, suku_bunga, indeks_usd]
-        y = [harga_emas]
-        ```
+        # Table of Contents Treeview
+        self.toc_tree = ttk.Treeview(toc_frame, show='tree')
+        toc_scroll = ttk.Scrollbar(toc_frame, orient=tk.VERTICAL, command=self.toc_tree.yview)
+        self.toc_tree.configure(yscrollcommand=toc_scroll.set)
 
-        ### Langkah 2: Dekomposisi SVD
-        ```
-        U, Σ, V^T = SVD(M)
-        ```
+        self.toc_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5, pady=5)
+        toc_scroll.pack(side=tk.RIGHT, fill=tk.Y)
 
-        ### Langkah 3: Menghitung Koefisien
-        ```
-        ω = V × Σ^+ × U^T × y
-        ```
+        # Populate table of contents
+        self.setup_table_of_contents()
 
-        ### Langkah 4: Prediksi
-        ```
-        y_pred = M_future × ω
-        ```
+        # Bind selection event
+        self.toc_tree.bind('<<TreeviewSelect>>', self.on_toc_selection)
 
-        ## Keunggulan SVD
-        - **Stabilitas Numerik**: Lebih stabil dibanding matrix inversion langsung
-        - **Handling Multicollinearity**: Dapat menangani korelasi tinggi antar variabel
-        - **Optimal Solution**: Memberikan solusi least squares yang optimal
-        """
+        # Right panel - Content dengan Notebook
+        content_frame = ttk.Frame(main_paned)
+        main_paned.add(content_frame, weight=3)
 
-        scroll_teori = ttk.Scrollbar(bingkai)
-        scroll_teori.pack(side=tk.RIGHT, fill=tk.Y)
+        # Control panel untuk konten
+        control_panel = ttk.Frame(content_frame)
+        control_panel.pack(fill=tk.X, pady=(0, 5))
 
-        text_teori = tk.Text(bingkai, yscrollcommand=scroll_teori.set, wrap=tk.WORD,
-                             font=("Arial", 10))
-        text_teori.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
-        text_teori.insert(tk.END, teks_teori)
-        text_teori.config(state=tk.DISABLED)
+        # Font size controls
+        font_frame = ttk.Frame(control_panel)
+        font_frame.pack(side=tk.LEFT)
 
-        scroll_teori.config(command=text_teori.yview)
+        ttk.Label(font_frame, text="📝 Font:").pack(side=tk.LEFT, padx=(0, 5))
+        self.font_size = tk.IntVar(value=10)
+        font_spinbox = ttk.Spinbox(font_frame, from_=8, to=16, textvariable=self.font_size,
+                                   width=5, command=self.update_font_size)
+        font_spinbox.pack(side=tk.LEFT, padx=(0, 10))
 
+        # Theme toggle
+        theme_frame = ttk.Frame(control_panel)
+        theme_frame.pack(side=tk.LEFT)
+
+        self.dark_mode = tk.BooleanVar(value=False)
+        ttk.Checkbutton(theme_frame, text="🌙 Mode Gelap", variable=self.dark_mode,
+                        command=self.toggle_content_theme).pack(side=tk.LEFT, padx=(0, 10))
+
+        # Export button
+        ttk.Button(control_panel, text="📤 Export PDF",
+                   command=self.export_theory_pdf).pack(side=tk.RIGHT)
+
+        # Content notebook
+        self.theory_notebook = ttk.Notebook(content_frame)
+        self.theory_notebook.pack(fill=tk.BOTH, expand=True)
+
+        # Create theory tabs
+        self.create_theory_tabs()
+
+        # Status bar untuk teori
+        status_frame = ttk.Frame(content_frame)
+        status_frame.pack(fill=tk.X, pady=(5, 0))
+
+        self.theory_status = ttk.Label(status_frame, text="Siap - Pilih topik dari daftar isi",
+                                       font=("Arial", 9))
+        self.theory_status.pack(side=tk.LEFT)
+
+    def setup_table_of_contents(self):
+        """Setup table of contents dengan struktur hierarkis"""
+        toc_items = [
+            ("📖 Pengantar", "intro", [
+                ("🎯 Tujuan Aplikasi", "intro_purpose"),
+                ("🔧 Cara Penggunaan", "intro_usage"),
+                ("📊 Fitur Utama", "intro_features")
+            ]),
+            ("🔬 Teori SVD", "svd_theory", [
+                ("📐 Dasar Matematika", "svd_math"),
+                ("🧮 Algoritma SVD", "svd_algorithm"),
+                ("💡 Implementasi", "svd_implementation"),
+                ("✅ Keunggulan & Kelemahan", "svd_pros_cons")
+            ]),
+            ("🤖 Machine Learning Models", "ml_models", [
+                ("📈 Linear Regression", "linear_regression"),
+                ("🎯 Ridge Regression", "ridge_regression"),
+                ("🔍 Lasso Regression", "lasso_regression"),
+                ("🌳 Random Forest", "random_forest"),
+                ("⚖️ Model Comparison", "model_comparison")
+            ]),
+            ("📊 Analisis Data", "data_analysis", [
+                ("📈 Analisis Trend", "trend_analysis"),
+                ("🔗 Analisis Korelasi", "correlation_analysis"),
+                ("🎯 Analisis Sensitivitas", "sensitivity_analysis"),
+                ("📉 Analisis Outlier", "outlier_analysis"),
+                ("🎲 Monte Carlo Simulation", "monte_carlo")
+            ]),
+            ("📋 Panduan Penggunaan", "user_guide", [
+                ("🗂️ Tab Data Historis", "guide_data"),
+                ("🔮 Tab Prediksi", "guide_prediction"),
+                ("📊 Tab Analisis Lanjutan", "guide_analysis"),
+                ("🔬 Tab Perbandingan Model", "guide_comparison"),
+                ("⚙️ Tips & Trik", "guide_tips")
+            ]),
+            ("❓ FAQ", "faq", [
+                ("🤔 Pertanyaan Umum", "faq_general"),
+                ("🐛 Troubleshooting", "faq_troubleshooting"),
+                ("📞 Dukungan", "faq_support")
+            ]),
+            ("📚 Referensi", "references", [
+                ("📖 Pustaka Ilmiah", "references_papers"),
+                ("💻 Dokumentasi Teknis", "references_technical"),
+                ("🔗 Sumber Online", "references_online")
+            ])
+        ]
+
+        # Clear existing items
+        for item in self.toc_tree.get_children():
+            self.toc_tree.delete(item)
+
+        # Add items to tree
+        for title, key, children in toc_items:
+            parent = self.toc_tree.insert("", "end", text=title, values=(key,))
+            for child_title, child_key in children:
+                self.toc_tree.insert(parent, "end", text=child_title, values=(child_key,))
+
+        # Expand all items
+        for item in self.toc_tree.get_children():
+            self.toc_tree.item(item, open=True)
+
+    def create_theory_tabs(self):
+        """Membuat tabs untuk konten teori"""
+        # Tab 1: Pengantar & Overview
+        self.intro_tab = ttk.Frame(self.theory_notebook)
+        self.theory_notebook.add(self.intro_tab, text="📖 Pengantar")
+        self.create_intro_content()
+
+        # Tab 2: Teori Matematika
+        self.math_tab = ttk.Frame(self.theory_notebook)
+        self.theory_notebook.add(self.math_tab, text="🔬 Teori SVD")
+        self.create_math_content()
+
+        # Tab 3: Machine Learning
+        self.ml_tab = ttk.Frame(self.theory_notebook)
+        self.theory_notebook.add(self.ml_tab, text="🤖 ML Models")
+        self.create_ml_content()
+
+        # Tab 4: Panduan Praktis
+        self.guide_tab = ttk.Frame(self.theory_notebook)
+        self.theory_notebook.add(self.guide_tab, text="📋 Panduan")
+        self.create_guide_content()
+
+        # Tab 5: FAQ & Troubleshooting
+        self.faq_tab = ttk.Frame(self.theory_notebook)
+        self.theory_notebook.add(self.faq_tab, text="❓ FAQ")
+        self.create_faq_content()
+
+    def create_intro_content(self):
+        """Membuat konten pengantar"""
+        # Create scrollable text widget
+        text_frame = ttk.Frame(self.intro_tab)
+        text_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        self.intro_text = tk.Text(text_frame, wrap=tk.WORD, font=("Arial", 10),
+                                  bg="white", fg="black", padx=20, pady=20)
+
+        intro_scroll = ttk.Scrollbar(text_frame, orient=tk.VERTICAL, command=self.intro_text.yview)
+        self.intro_text.configure(yscrollcommand=intro_scroll.set)
+
+        self.intro_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        intro_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+
+        # Content for intro
+        intro_content = """
+    🏆 APLIKASI PREDIKSI HARGA EMAS - VERSI DITINGKATKAN
+
+    ═══════════════════════════════════════════════════════════════
+
+    🎯 TUJUAN APLIKASI
+
+    Aplikasi ini dirancang untuk membantu Anda melakukan prediksi harga emas menggunakan berbagai teknik analisis data modern, termasuk:
+
+    • Singular Value Decomposition (SVD)
+    • Machine Learning Algorithms (Linear, Ridge, Lasso, Random Forest)
+    • Analisis Statistik Lanjutan
+    • Monte Carlo Simulation
+    • Cross-validation dan Backtesting
+
+    ═══════════════════════════════════════════════════════════════
+
+    🔧 CARA PENGGUNAAN CEPAT
+
+    1. 📊 DATA HISTORIS
+       → Import atau edit data historis harga emas
+       → Verifikasi kualitas data dengan statistik dan visualisasi
+       → Tambah/hapus data point sesuai kebutuhan
+
+    2. 🔮 PREDIKSI
+       → Masukkan parameter ekonomi (inflasi, suku bunga, indeks USD)
+       → Pilih model prediksi (SVD, Linear, Ridge, Lasso, Random Forest)
+       → Klik "Hitung Prediksi" untuk mendapatkan hasil
+
+    3. 📈 ANALISIS LANJUTAN
+       → Jalankan berbagai jenis analisis (korelasi, sensitivitas, trend)
+       → Visualisasikan hasil dengan grafik interaktif
+       → Export hasil analisis ke berbagai format
+
+    4. 🔬 PERBANDINGAN MODEL
+       → Bandingkan performa berbagai model ML
+       → Lihat metrics lengkap (R², RMSE, MAE, MAPE)
+       → Analisis residuals dan feature importance
+
+    ═══════════════════════════════════════════════════════════════
+
+    📊 FITUR UTAMA
+
+    🔍 ANALISIS DATA KOMPREHENSIF
+    • Statistik deskriptif lengkap
+    • Deteksi outlier dengan berbagai metode
+    • Analisis trend dan seasonality
+    • Uji normalitas dan stationaritas
+
+    🤖 MULTIPLE ML ALGORITHMS
+    • SVD (Singular Value Decomposition)
+    • Linear Regression dengan regularization
+    • Ensemble methods (Random Forest)
+    • Cross-validation untuk validasi model
+
+    📈 VISUALISASI INTERAKTIF
+    • Grafik dinamis dan zoomable
+    • Multiple plot types (line, bar, scatter, area)
+    • 3D visualization untuk surface plots
+    • Export grafik dalam format HD
+
+    🎯 ANALISIS PREDIKTIF
+    • Confidence intervals untuk prediksi
+    • Sensitivity analysis untuk parameter
+    • Monte Carlo simulation untuk risk assessment
+    • Backtesting untuk validasi historical
+
+    ⚙️ ADVANCED FEATURES
+    • Auto-save dan session management
+    • Customizable themes (light/dark mode)
+    • Export ke multiple formats (PDF, Excel, CSV)
+    • Keyboard shortcuts untuk efficiency
+
+    ═══════════════════════════════════════════════════════════════
+
+    💡 TIPS PENGGUNAAN
+
+    ✅ Selalu verifikasi kualitas data sebelum prediksi
+    ✅ Gunakan multiple models untuk cross-validation
+    ✅ Perhatikan confidence intervals dalam interpretasi
+    ✅ Jalankan sensitivity analysis untuk robustness
+    ✅ Export hasil untuk dokumentasi dan presentasi
+
+    ═══════════════════════════════════════════════════════════════
+
+    ⚠️ DISCLAIMER
+
+    Aplikasi ini adalah tools analisis dan tidak memberikan nasihat investasi. 
+    Selalu konsultasikan dengan ahli keuangan sebelum membuat keputusan investasi.
+    Past performance is not indicative of future results.
+
+    ═══════════════════════════════════════════════════════════════
+    """
+
+        # Configure text tags for styling
+        self.intro_text.tag_configure("title", font=("Arial", 14, "bold"), foreground="darkblue")
+        self.intro_text.tag_configure("section", font=("Arial", 12, "bold"), foreground="darkgreen")
+        self.intro_text.tag_configure("subsection", font=("Arial", 11, "bold"), foreground="darkorange")
+        self.intro_text.tag_configure("bullet", font=("Arial", 10), foreground="darkred")
+        self.intro_text.tag_configure("tip", font=("Arial", 10), foreground="darkviolet")
+        self.intro_text.tag_configure("warning", font=("Arial", 10, "italic"), foreground="red")
+
+        # Insert content and apply tags
+        self.intro_text.insert(tk.END, intro_content)
+        self.apply_text_styling(self.intro_text)
+        self.intro_text.config(state=tk.DISABLED)
+
+    def create_math_content(self):
+        """Membuat konten teori matematika"""
+        text_frame = ttk.Frame(self.math_tab)
+        text_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        self.math_text = tk.Text(text_frame, wrap=tk.WORD, font=("Consolas", 10),
+                                 bg="white", fg="black", padx=20, pady=20)
+
+        math_scroll = ttk.Scrollbar(text_frame, orient=tk.VERTICAL, command=self.math_text.yview)
+        self.math_text.configure(yscrollcommand=math_scroll.set)
+
+        self.math_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        math_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+
+        math_content = """
+    🔬 SINGULAR VALUE DECOMPOSITION (SVD) - TEORI LENGKAP
+
+    ═══════════════════════════════════════════════════════════════
+
+    📐 DASAR MATEMATIKA
+
+    SVD adalah faktorisasi matriks yang mengdekomposisi matriks M (m×n) menjadi:
+
+        M = U × Σ × V^T
+
+    Dimana:
+    • U: Matriks orthogonal (m×m) - Left singular vectors
+    • Σ: Matriks diagonal (m×n) - Singular values
+    • V^T: Transpose matriks orthogonal (n×n) - Right singular vectors
+
+    ───────────────────────────────────────────────────────────────
+
+    🧮 PROPERTI MATEMATIKA
+
+    1. ORTHOGONALITAS
+       U^T × U = I    dan    V^T × V = I
+
+    2. SINGULAR VALUES
+       σ₁ ≥ σ₂ ≥ ... ≥ σₙ ≥ 0
+
+    3. RANK APPROXIMATION
+       M ≈ Σᵢ₌₁ʳ σᵢ × uᵢ × vᵢ^T
+
+    ───────────────────────────────────────────────────────────────
+
+    💻 IMPLEMENTASI DALAM PREDIKSI EMAS
+
+    INPUT MATRIX:
+    ┌                                    ┐
+    │ inflasi₁    suku_bunga₁   usd₁     │
+    │ inflasi₂    suku_bunga₂   usd₂     │  = M
+    │    ...          ...       ...      │
+    │ inflasiₙ    suku_bungaₙ   usdₙ     │
+    └                                    ┘
+
+    TARGET VECTOR:
+    ┌            ┐
+    │ harga_emas₁│
+    │ harga_emas₂│  = y
+    │    ...     │
+    │ harga_emasₙ│
+    └            ┘
+
+    LANGKAH ALGORITMA:
+
+    1. DEKOMPOSISI SVD
+       [U, Σ, V^T] = SVD(M)
+
+    2. HITUNG PSEUDO-INVERSE
+       Σ⁺ = diag(1/σᵢ) untuk σᵢ > threshold
+
+    3. HITUNG KOEFISIEN
+       ω = V × Σ⁺ × U^T × y
+
+    4. PREDIKSI
+       y_pred = M_future × ω
+
+    ───────────────────────────────────────────────────────────────
+
+    🎯 KEUNGGULAN SVD
+
+    ✅ STABILITAS NUMERIK
+       • Tidak menggunakan matrix inversion langsung
+       • Robust terhadap ill-conditioned matrices
+       • Handling singular/near-singular matrices
+
+    ✅ OPTIMAL SOLUTION
+       • Memberikan least squares solution yang optimal
+       • Minimizes ||Mω - y||² dalam norm Euclidean
+
+    ✅ DIMENSIONALITY REDUCTION
+       • Dapat memfilter noise dengan truncated SVD
+       • Mengidentifikasi principal components
+
+    ✅ MULTICOLLINEARITY HANDLING
+       • Dapat menangani korelasi tinggi antar variabel
+       • Tidak terpengaruh oleh redundant features
+
+    ───────────────────────────────────────────────────────────────
+
+    ⚠️ KELEMAHAN SVD
+
+    ❌ COMPUTATIONAL COMPLEXITY
+       • O(mn²) untuk m≥n atau O(m²n) untuk m<n
+       • Intensive untuk large datasets
+
+    ❌ INTERPRETABILITY
+       • Koefisien ω tidak mudah diinterpretasi
+       • Singular vectors tidak memiliki makna ekonomi langsung
+
+    ❌ OVERFITTING RISK
+       • Dapat overfit pada small datasets
+       • Perlu regularization atau cross-validation
+
+    ───────────────────────────────────────────────────────────────
+
+    🔢 CONTOH NUMERIK
+
+    Misalkan M = ┌ 2.75  3.50  100.7 ┐    y = ┌ 1773.3 ┐
+                │ 3.12  3.75   95.6 │        │ 1807.2 │
+                │ 3.36  4.00  104.1 │        │ 1806.9 │
+                │ 1.80  5.81  103.5 │        │ 1962.2 │
+                └ 2.09  6.10  104.5 ┘        └ 2416.4 ┘
+
+    Setelah SVD:
+    U ≈ ┌ -0.32  -0.59   0.65   0.33 ┐
+        │ -0.31  -0.46  -0.71  -0.43 │
+        │ -0.34  -0.48   0.25  -0.75 │
+        │ -0.45   0.30   0.11   0.83 │
+        └ -0.67   0.41  -0.10  -0.61 ┘
+
+    Σ ≈ [108.2, 4.8, 2.1]
+
+    V^T ≈ ┌ -0.05  -0.15  -0.99 ┐
+          │  0.87  -0.49   0.04 │
+          └ -0.49  -0.86   0.13 ┘
+
+    ω ≈ ┌  23.45 ┐
+        │ -187.32│
+        └  15.67 ┘
+
+    ───────────────────────────────────────────────────────────────
+
+    📊 VALIDASI MODEL
+
+    1. R-SQUARED (R²)
+       R² = 1 - (SS_res / SS_tot)
+
+    2. ROOT MEAN SQUARE ERROR (RMSE)
+       RMSE = √(Σ(yᵢ - ŷᵢ)² / n)
+
+    3. MEAN ABSOLUTE ERROR (MAE)
+       MAE = Σ|yᵢ - ŷᵢ| / n
+
+    4. CROSS-VALIDATION SCORE
+       CV = (1/k)Σᵢ₌₁ᵏ Score(foldᵢ)
+
+    ═══════════════════════════════════════════════════════════════
+    """
+
+        self.math_text.insert(tk.END, math_content)
+        self.apply_text_styling(self.math_text)
+        self.math_text.config(state=tk.DISABLED)
+
+    def create_ml_content(self):
+        """Membuat konten machine learning models"""
+        text_frame = ttk.Frame(self.ml_tab)
+        text_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        self.ml_text = tk.Text(text_frame, wrap=tk.WORD, font=("Arial", 10),
+                               bg="white", fg="black", padx=20, pady=20)
+
+        ml_scroll = ttk.Scrollbar(text_frame, orient=tk.VERTICAL, command=self.ml_text.yview)
+        self.ml_text.configure(yscrollcommand=ml_scroll.set)
+
+        self.ml_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        ml_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+
+        ml_content = """
+    🤖 MACHINE LEARNING MODELS - PANDUAN LENGKAP
+
+    ═══════════════════════════════════════════════════════════════
+
+    📈 LINEAR REGRESSION
+
+    KONSEP:
+    Model paling sederhana yang mencari hubungan linear antara variabel independen (X) 
+    dengan variabel dependen (y).
+
+    FORMULA:
+    y = β₀ + β₁x₁ + β₂x₂ + β₃x₃ + ε
+
+    Dimana:
+    • β₀: Intercept
+    • βᵢ: Koefisien untuk variabel xᵢ
+    • ε: Error term
+
+    KEUNGGULAN:
+    ✅ Interpretable - mudah dipahami
+    ✅ Fast computation - sangat cepat
+    ✅ No hyperparameter tuning
+    ✅ Good baseline model
+
+    KELEMAHAN:
+    ❌ Assumes linear relationship
+    ❌ Sensitive to outliers
+    ❌ No regularization - prone to overfitting
+    ❌ Multicollinearity issues
+
+    KAPAN DIGUNAKAN:
+    • Dataset kecil dengan hubungan linear jelas
+    • Butuh interpretabilitas tinggi
+    • Sebagai baseline comparison
+
+    ───────────────────────────────────────────────────────────────
+
+    🎯 RIDGE REGRESSION (L2 Regularization)
+
+    KONSEP:
+    Linear regression dengan penalty L2 untuk mencegah overfitting dan menangani 
+    multicollinearity.
+
+    FORMULA:
+    Loss = MSE + α × Σβᵢ²
+
+    Dimana α adalah regularization parameter.
+
+    KEUNGGULAN:
+    ✅ Handles multicollinearity well
+    ✅ Prevents overfitting
+    ✅ Stable coefficients
+    ✅ Works with p > n scenarios
+
+    KELEMAHAN:
+    ❌ Doesn't perform feature selection
+    ❌ All features retained with small coefficients
+    ❌ Need to tune α parameter
+    ❌ Less interpretable than linear regression
+
+    HYPERPARAMETER:
+    • α (alpha): Regularization strength
+      - α = 0: sama dengan linear regression
+      - α → ∞: coefficients → 0
+      - Typical range: 0.01 to 100
+
+    KAPAN DIGUNAKAN:
+    • Dataset dengan multicollinearity
+    • Lebih banyak features daripada samples
+    • Butuh model yang stable
+
+    ───────────────────────────────────────────────────────────────
+
+    🔍 LASSO REGRESSION (L1 Regularization)
+
+    KONSEP:
+    Linear regression dengan penalty L1 yang dapat melakukan automatic feature selection.
+
+    FORMULA:
+    Loss = MSE + α × Σ|βᵢ|
+
+    KEUNGGULAN:
+    ✅ Automatic feature selection
+    ✅ Sparse solutions (some βᵢ = 0)
+    ✅ Handles multicollinearity
+    ✅ Interpretable results
+
+    KELEMAHAN:
+    ❌ Can arbitrarily select one feature from correlated group
+    ❌ Unstable feature selection
+    ❌ Less stable than Ridge
+    ❌ May underperform with small α
+
+    HYPERPARAMETER:
+    • α (alpha): Regularization strength
+      - Higher α → more features set to zero
+      - Lower α → closer to linear regression
+
+    KAPAN DIGUNAKAN:
+    • Banyak features, hanya beberapa yang relevan
+    • Butuh feature selection otomatis
+    • Interpretabilitas penting
+
+    ───────────────────────────────────────────────────────────────
+
+    🌳 RANDOM FOREST
+
+    KONSEP:
+    Ensemble method yang menggabungkan multiple decision trees dengan voting/averaging.
+
+    ALGORITMA:
+    1. Bootstrap sampling dari training data
+    2. Random feature selection di setiap split
+    3. Build decision tree untuk setiap bootstrap sample
+    4. Aggregate predictions (voting untuk classification, averaging untuk regression)
+
+    KEUNGGULAN:
+    ✅ Handles non-linear relationships
+    ✅ Robust to outliers
+    ✅ Provides feature importance
+    ✅ No assumptions about data distribution
+    ✅ Handles missing values
+    ✅ Less prone to overfitting
+
+    KELEMAHAN:
+    ❌ Black box model - less interpretable
+    ❌ Can overfit with very noisy data
+    ❌ Biased towards categorical variables with more levels
+    ❌ Larger memory footprint
+
+    HYPERPARAMETERS:
+    • n_estimators: Number of trees (default: 100)
+    • max_depth: Maximum depth of trees
+    • min_samples_split: Minimum samples to split node
+    • min_samples_leaf: Minimum samples in leaf
+    • max_features: Number of features for best split
+
+    KAPAN DIGUNAKAN:
+    • Complex non-linear relationships
+    • Mixed data types (numerical + categorical)
+    • Robust baseline model diperlukan
+    • Feature importance analysis
+
+    ───────────────────────────────────────────────────────────────
+
+    ⚖️ MODEL COMPARISON FRAMEWORK
+
+    METRICS EVALUASI:
+
+    1. R² SCORE (Coefficient of Determination)
+       • Range: -∞ to 1
+       • 1 = perfect fit, 0 = no predictive power
+       • < 0 = worse than predicting mean
+
+    2. RMSE (Root Mean Square Error)
+       • Same unit as target variable
+       • Penalizes large errors more heavily
+       • Lower is better
+
+    3. MAE (Mean Absolute Error)
+       • Same unit as target variable
+       • Less sensitive to outliers than RMSE
+       • Lower is better
+
+    4. MAPE (Mean Absolute Percentage Error)
+       • Percentage error - easy to interpret
+       • Issues when actual values near zero
+       • Lower is better
+
+    VALIDATION STRATEGY:
+
+    1. TRAIN/TEST SPLIT
+       • Simple split (e.g., 80/20)
+       • Stratified for balanced datasets
+
+    2. CROSS-VALIDATION
+       • K-fold CV (typically k=5 or k=10)
+       • Leave-one-out CV for small datasets
+       • Time Series CV for temporal data
+
+    3. NESTED CV
+       • Outer loop: model selection
+       • Inner loop: hyperparameter tuning
+
+    SELECTION CRITERIA:
+
+    🏆 BEST MODEL SELECTION:
+    1. Highest CV R² score
+    2. Lowest CV RMSE
+    3. Smallest gap between train/test performance
+    4. Consistent performance across folds
+    5. Computational efficiency
+    6. Interpretability requirements
+
+    ═══════════════════════════════════════════════════════════════
+
+    💡 PRACTICAL RECOMMENDATIONS
+
+    UNTUK PREDIKSI HARGA EMAS:
+
+    1. START WITH SIMPLE
+       • Begin with Linear Regression as baseline
+       • Check for linear relationships in data
+
+    2. HANDLE MULTICOLLINEARITY
+       • Use Ridge if variables are correlated
+       • Lasso if feature selection needed
+
+    3. CAPTURE NON-LINEARITY
+       • Random Forest for complex patterns
+       • SVD for dimensionality reduction
+
+    4. ENSEMBLE APPROACH
+       • Combine predictions from multiple models
+       • Weighted average based on CV performance
+
+    5. VALIDATE THOROUGHLY
+       • Use time series validation for temporal data
+       • Check residuals for patterns
+       • Test on out-of-sample data
+
+    ═══════════════════════════════════════════════════════════════
+    """
+
+        self.ml_text.insert(tk.END, ml_content)
+        self.apply_text_styling(self.ml_text)
+        self.ml_text.config(state=tk.DISABLED)
+
+    def create_guide_content(self):
+        """Membuat konten panduan penggunaan"""
+        text_frame = ttk.Frame(self.guide_tab)
+        text_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        self.guide_text = tk.Text(text_frame, wrap=tk.WORD, font=("Arial", 10),
+                                  bg="white", fg="black", padx=20, pady=20)
+
+        guide_scroll = ttk.Scrollbar(text_frame, orient=tk.VERTICAL, command=self.guide_text.yview)
+        self.guide_text.configure(yscrollcommand=guide_scroll.set)
+
+        self.guide_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        guide_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+
+        guide_content = """
+    📋 PANDUAN PENGGUNAAN LENGKAP
+
+    ═══════════════════════════════════════════════════════════════
+
+    🗂️ TAB DATA HISTORIS
+
+    FUNGSI UTAMA:
+    • Input dan edit data historis harga emas
+    • Visualisasi data dengan berbagai jenis chart
+    • Analisis statistik deskriptif
+    • Import/export data dari/ke file
+
+    CARA PENGGUNAAN:
+
+    1. INPUT DATA
+       ➤ Klik "➕ Tambah" untuk menambah data baru
+       ➤ Klik "✏️ Edit" untuk mengubah data yang dipilih
+       ➤ Klik "🗑️ Hapus" untuk menghapus data
+
+    2. IMPORT DATA
+       ➤ Klik "📥 Impor" → pilih file CSV/Excel
+       ➤ Pastikan format: Tahun, Inflasi, Suku_Bunga, Indeks_USD, Harga_Emas
+       ➤ Verifikasi data setelah import
+
+    3. VISUALISASI
+       ➤ Pilih jenis grafik: Line, Bar, Scatter, Area
+       ➤ Pilih variabel: Semua atau individual
+       ➤ Gunakan toolbar untuk zoom, pan, save
+
+    4. ANALISIS STATISTIK
+       ➤ Panel kanan menampilkan mean, std, min, max
+       ➤ Gunakan untuk deteksi outlier dan kualitas data
+
+    TIPS:
+    💡 Selalu verifikasi data sebelum analisis
+    💡 Gunakan scatter plot untuk melihat korelasi
+    💡 Export data backup secara berkala
+
+    ───────────────────────────────────────────────────────────────
+
+    🔮 TAB PREDIKSI
+
+    FUNGSI UTAMA:
+    • Input parameter ekonomi untuk prediksi
+    • Pilih model prediksi (SVD, Linear, Ridge, Lasso, Random Forest)
+    • Lihat hasil prediksi dengan confidence interval
+    • Analisis komponen SVD dan feature importance
+
+    LANGKAH-LANGKAH:
+
+    1. INPUT PARAMETER
+       ➤ Tahun: Tahun target prediksi
+       ➤ Inflasi (%): Perkiraan tingkat inflasi
+       ➤ Suku Bunga (%): Suku bunga acuan yang diharapkan
+       ➤ Indeks USD: Proyeksi kekuatan dollar AS
+
+    2. PILIH MODEL
+       ➤ SVD: Robust, good for small datasets
+       ➤ Linear: Simple, interpretable baseline
+       ➤ Ridge: Good for correlated features
+       ➤ Lasso: Automatic feature selection
+       ➤ Random Forest: Handles non-linearity
+
+    3. OPSI LANJUTAN
+       ☑️ Confidence Interval: Untuk uncertainty quantification
+       ☑️ Feature Importance: Untuk melihat kontribusi variabel
+       ☑️ Residual Analysis: Untuk validasi model
+
+    4. JALANKAN PREDIKSI
+       ➤ Klik "🔮 Hitung Prediksi"
+       ➤ Tunggu proses selesai
+       ➤ Lihat hasil di panel kanan
+
+    INTERPRETASI HASIL:
+    • Harga Prediksi: Estimasi harga emas dalam USD
+    • Confidence Interval: Range kemungkinan nilai
+    • Feature Importance: Kontribusi relatif setiap variabel
+    • R² Score: Goodness of fit model (0-1, higher is better)
+
+    ───────────────────────────────────────────────────────────────
+
+    📊 TAB ANALISIS LANJUTAN
+
+    FUNGSI UTAMA:
+    • Berbagai jenis analisis statistik dan ekonometrik
+    • Visualisasi advanced dengan plot interaktif
+    • Export hasil analisis
+
+    JENIS ANALISIS:
+
+    1. ANALISIS KORELASI
+       ➤ Melihat hubungan antar variabel ekonomi
+       ➤ Heatmap correlation matrix dengan color coding
+       ➤ Significance testing dengan p-values
+       ➤ Interpretasi: nilai mendekati +1 (korelasi positif kuat), 
+         mendekati -1 (korelasi negatif kuat), mendekati 0 (tidak berkorelasi)
+
+    2. ANALISIS SENSITIVITAS
+       ➤ Dampak perubahan parameter terhadap prediksi harga emas
+       ➤ Variasi parameter ±5%, ±10%, ±20% dari nilai base
+       ➤ Ranking sensitivitas variabel (mana yang paling berpengaruh)
+       ➤ Scenario analysis untuk risk assessment
+       ➤ Interpretasi: variabel dengan sensitivitas tinggi memerlukan perhatian khusus
+
+    3. ANALISIS TREND
+       ➤ Linear trend untuk setiap variabel ekonomi
+       ➤ Growth rate calculation (persentase perubahan year-over-year)
+       ➤ Trend strength dan statistical significance (R², p-value)
+       ➤ Moving average untuk smoothing data
+       ➤ Interpretasi: trend positif menunjukkan kenaikan, negatif menunjukkan penurunan
+
+    4. ANALISIS OUTLIER
+       ➤ Deteksi data yang tidak biasa atau ekstrem
+       ➤ Metode Z-score: |z| > 2 dianggap outlier
+       ➤ Metode IQR: data di luar Q1-1.5*IQR atau Q3+1.5*IQR
+       ➤ Modified Z-score (MAD): lebih robust terhadap outlier
+       ➤ Visualisasi outliers dengan scatter plot dan highlighting
+       ➤ Impact assessment: pengaruh outlier terhadap model
+
+    5. TIME SERIES ANALYSIS
+       ➤ Decomposition: trend, seasonal, residual components
+       ➤ Stationarity testing untuk validasi asumsi time series
+       ➤ Autocorrelation analysis untuk pola temporal
+       ➤ Interpretasi komponen:
+         - Trend: arah pergerakan jangka panjang
+         - Seasonal: pola berulang (jika ada)
+         - Residual: noise yang tidak dapat dijelaskan
+
+    6. STATISTICAL TESTING
+       ➤ Normality tests (Shapiro-Wilk): apakah data berdistribusi normal
+       ➤ Confidence intervals untuk mean setiap variabel
+       ➤ Correlation significance testing
+       ➤ Descriptive statistics: mean, median, std, skewness, kurtosis
+       ➤ Interpretasi p-values: < 0.05 signifikan, < 0.01 sangat signifikan
+
+    7. MONTE CARLO SIMULATION
+       ➤ Risk assessment dengan random sampling dari distribusi parameter
+       ➤ Generate ribuan skenario prediksi berdasarkan uncertainty
+       ➤ Distribution of predictions untuk melihat range kemungkinan
+       ➤ Risk metrics:
+         - VaR (Value at Risk): worst-case scenario pada confidence level tertentu
+         - CVaR (Conditional VaR): rata-rata kerugian di atas VaR
+         - Probability of loss: kemungkinan harga turun dari ekspektasi
+       ➤ Visualization: histogram, box plot, cumulative distribution
+
+    8. FEATURE ANALYSIS
+       ➤ Feature engineering: membuat variabel baru dari kombinasi existing features
+       ➤ Feature importance dengan multiple methods:
+         - Correlation-based: korelasi absolut dengan target
+         - Mutual information: dependency non-linear
+         - F-statistics: statistical significance
+         - Random Forest importance: contribution dalam ensemble model
+       ➤ Feature selection recommendations
+       ➤ Interaction effects analysis
+
+    CARA PENGGUNAAN:
+    1. Pilih jenis analisis dari radio button
+    2. Set parameter sesuai kebutuhan
+    3. Klik "🔍 Jalankan Analisis"
+    4. Lihat hasil di text panel dan visualisasi
+    5. Export hasil jika diperlukan
+
+    ───────────────────────────────────────────────────────────────
+
+    🔬 TAB PERBANDINGAN MODEL
+
+    FUNGSI UTAMA:
+    • Benchmark multiple models secara bersamaan
+    • Cross-validation dan statistical testing
+    • Comprehensive performance metrics
+    • Model selection recommendations
+
+    PENGATURAN:
+
+    1. MODEL SELECTION
+       ☑️ Pilih model yang ingin dibandingkan
+       ☑️ Minimal 2 model untuk comparison
+
+    2. VALIDATION SETTINGS
+       ➤ CV Folds: Jumlah fold untuk cross-validation (3-10)
+       ➤ Test Split: Proporsi data untuk testing (0.1-0.5)
+       ➤ Random State: Seed untuk reproducibility
+
+    3. COMPARISON OPTIONS
+       ☑️ Feature Importance Analysis
+       ☑️ Residuals Analysis
+       ☑️ Statistical Tests
+       ☑️ Training Time Analysis
+
+    HASIL YANG DITAMPILKAN:
+
+    1. TABEL COMPARISON
+       • Model ranking berdasarkan metrics
+       • R², RMSE, MAE, MAPE scores
+       • Cross-validation statistics
+
+    2. VISUALISASI
+       • Metrics comparison (bar charts)
+       • Actual vs Predicted scatter plots
+       • Residuals analysis
+       • Feature importance comparison
+       • CV scores distribution
+
+    3. STATISTICAL ANALYSIS
+       • Model significance testing
+       • Bias-variance analysis
+       • Performance consistency
+
+    4. RECOMMENDATIONS
+       • Best model selection dengan reasoning
+       • Overfitting detection
+       • Performance interpretation
+
+    ───────────────────────────────────────────────────────────────
+
+    ⚙️ TIPS & TRIK PENGGUNAAN
+
+    WORKFLOW OPTIMAL:
+
+    1. 📊 PERSIAPAN DATA
+       ✓ Import data historis yang lengkap dan akurat
+       ✓ Verifikasi tidak ada missing values
+       ✓ Check outliers dan data quality
+       ✓ Backup data original
+
+    2. 🔍 EXPLORATORY ANALYSIS
+       ✓ Lihat distribusi dan statistik setiap variabel
+       ✓ Analisis korelasi antar variabel
+       ✓ Deteksi trend dan seasonality
+       ✓ Identifikasi outliers
+
+    3. 🤖 MODEL DEVELOPMENT
+       ✓ Mulai dengan baseline model (Linear Regression)
+       ✓ Test multiple models dengan cross-validation
+       ✓ Tune hyperparameters jika diperlukan
+       ✓ Validate dengan out-of-sample data
+
+    4. 📈 MODEL EVALUATION
+       ✓ Compare multiple metrics (R², RMSE, MAE)
+       ✓ Check residuals untuk patterns
+       ✓ Analyze feature importance
+       ✓ Test model stability dengan bootstrap
+
+    5. 🎯 PREDICTION & INTERPRETATION
+       ✓ Use best model untuk final prediction
+       ✓ Calculate confidence intervals
+       ✓ Perform sensitivity analysis
+       ✓ Document assumptions dan limitations
+
+    KEYBOARD SHORTCUTS:
+    • Ctrl+O: Import data
+    • Ctrl+S: Export results
+    • Ctrl+R: Run prediction
+    • F5: Refresh data
+    • Ctrl+T: Toggle theme
+
+    TROUBLESHOOTING UMUM:
+
+    ❌ PREDIKSI TIDAK AKURAT
+       ➤ Check data quality dan completeness
+       ➤ Coba model yang berbeda
+       ➤ Increase dataset size jika memungkinkan
+       ➤ Consider additional features
+
+    ❌ MODEL OVERFITTING
+       ➤ Use regularization (Ridge/Lasso)
+       ➤ Reduce model complexity
+       ➤ Increase training data
+       ➤ Use cross-validation
+
+    ❌ SLOW PERFORMANCE
+       ➤ Reduce dataset size
+       ➤ Use simpler models
+       ➤ Enable caching
+       ➤ Close unnecessary applications
+
+    ═══════════════════════════════════════════════════════════════
+    """
+
+        self.guide_text.insert(tk.END, guide_content)
+        self.apply_text_styling(self.guide_text)
+        self.guide_text.config(state=tk.DISABLED)
+
+    def create_faq_content(self):
+        """Membuat konten FAQ"""
+        text_frame = ttk.Frame(self.faq_tab)
+        text_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        self.faq_text = tk.Text(text_frame, wrap=tk.WORD, font=("Arial", 10),
+                                bg="white", fg="black", padx=20, pady=20)
+
+        faq_scroll = ttk.Scrollbar(text_frame, orient=tk.VERTICAL, command=self.faq_text.yview)
+        self.faq_text.configure(yscrollcommand=faq_scroll.set)
+
+        self.faq_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        faq_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+
+        faq_content = """
+    ❓ FREQUENTLY ASKED QUESTIONS
+
+    ═══════════════════════════════════════════════════════════════
+
+    🤔 PERTANYAAN UMUM
+
+    Q: Apakah aplikasi ini memberikan nasihat investasi?
+    A: TIDAK. Aplikasi ini adalah tool analisis untuk educational purposes. 
+       Selalu konsultasi dengan financial advisor sebelum membuat keputusan investasi.
+
+    Q: Seberapa akurat prediksi harga emas dari aplikasi ini?
+    A: Akurasi tergantung pada kualitas data historis dan kondisi pasar. 
+       Prediksi financial selalu memiliki uncertainty. Gunakan confidence intervals 
+       untuk memahami range kemungkinan nilai.
+
+    Q: Model mana yang paling baik untuk prediksi harga emas?
+    A: Tidak ada model yang universally "terbaik". Gunakan tab Model Comparison 
+       untuk membandingkan performa berbagai model pada data Anda. 
+       Umumnya Random Forest good untuk non-linear patterns, SVD robust untuk small datasets.
+
+    Q: Berapa banyak data historis yang diperlukan?
+    A: Minimum 5-10 data points, idealnya 20+ untuk hasil yang lebih reliable. 
+       Semakin banyak data berkualitas, semakin baik prediksi.
+
+    Q: Bisakah menambahkan variabel ekonomi lain?
+    A: Saat ini aplikasi support 3 variabel input: inflasi, suku bunga, indeks USD. 
+       Untuk additional features, perlu modifikasi code.
+
+    Q: Apakah bisa memprediksi untuk beberapa tahun ke depan?
+    A: Ya, tapi akurasi menurun untuk horizon yang lebih jauh. 
+       Recommended untuk prediksi 1-2 tahun ke depan.
+
+    ───────────────────────────────────────────────────────────────
+
+    🐛 TROUBLESHOOTING
+
+    Q: Error "Input tidak valid" saat memasukkan parameter
+    A: • Pastikan menggunakan format angka yang benar (gunakan titik untuk decimal)
+       • Check range values yang reasonable (inflasi 0-20%, suku bunga 0-25%, dll)
+       • Jangan gunakan karakter khusus atau huruf
+
+    Q: Aplikasi menjadi lambat atau hang
+    A: • Tutup tab browser/aplikasi lain yang tidak diperlukan
+       • Reduce number of Monte Carlo simulations
+       • Clear cache dari menu Edit → Reset Cache
+       • Restart aplikasi jika perlu
+
+    Q: Grafik tidak muncul atau error visualisasi
+    A: • Check apakah data historis sudah diinput dengan benar
+       • Refresh visualisasi dengan tombol 🔄
+       • Coba ganti jenis plot (line, bar, scatter)
+       • Reset zoom jika grafik terpotong
+
+    Q: Import data CSV/Excel tidak berhasil
+    A: • Pastikan format file: Tahun, Inflasi, Suku_Bunga, Indeks_USD, Harga_Emas
+       • Header harus exact match (case sensitive)
+       • Tidak ada missing values atau cells kosong
+       • Gunakan format CSV dengan comma separator
+
+    Q: Prediksi menghasilkan nilai yang tidak masuk akal
+    A: • Verifikasi input parameters dalam range yang reasonable
+       • Check data historis untuk outliers atau errors
+       • Coba model yang berbeda
+       • Lihat confidence intervals untuk uncertainty estimate
+
+    Q: Cross-validation error atau model comparison gagal
+    A: • Pastikan memiliki cukup data (minimal 5 points)
+       • Check tidak ada missing values
+       • Reduce CV folds jika dataset kecil
+       • Disable advanced options jika ada error
+
+    ───────────────────────────────────────────────────────────────
+
+    📞 DUKUNGAN TEKNIS
+
+    INFORMASI SISTEM:
+    • Aplikasi: Prediksi Harga Emas v2.0
+    • Platform: Windows/Mac/Linux
+    • Dependencies: NumPy, Pandas, Scikit-learn, Matplotlib, Tkinter
+
+    REPORTING BUGS:
+    Jika menemukan bug atau error, catat informasi berikut:
+    1. Langkah yang dilakukan sebelum error
+    2. Pesan error yang muncul
+    3. Data yang digunakan (jika bisa dishare)
+    4. Screenshot error (jika relevan)
+
+    FEATURE REQUESTS:
+    Saran untuk improvement aplikasi:
+    • Additional ML models (XGBoost, Neural Networks)
+    • More economic indicators
+    • Real-time data integration
+    • Advanced visualization options
+    • Export formats tambahan
+
+    LEARNING RESOURCES:
+    📚 Buku Referensi:
+    • "Introduction to Statistical Learning" - James, Witten, Hastie, Tibshirani
+    • "Pattern Recognition and Machine Learning" - Christopher Bishop
+    • "Financial Econometrics" - Petr Zemčík
+
+    🌐 Online Courses:
+    • Coursera: Machine Learning by Andrew Ng
+    • edX: Introduction to Computational Thinking and Data Science
+    • Khan Academy: Statistics and Probability
+
+    🔗 Technical Documentation:
+    • NumPy: https://numpy.org/doc/
+    • Pandas: https://pandas.pydata.org/docs/
+    • Scikit-learn: https://scikit-learn.org/stable/
+    • Matplotlib: https://matplotlib.org/stable/contents.html
+
+    ───────────────────────────────────────────────────────────────
+
+    ⚠️ DISCLAIMER & RISK WARNINGS
+
+    INVESTMENT DISCLAIMER:
+    • Past performance tidak mengindikasikan future results
+    • Gold prices extremely volatile dan dipengaruhi banyak faktor
+    • Economic indicators hanya sebagian dari factors yang mempengaruhi harga
+    • Selalu diversifikasi portfolio dan jangan invest lebih dari yang Anda mampu
+
+    TECHNICAL LIMITATIONS:
+    • Model berdasarkan historical data yang terbatas
+    • Tidak memperhitungkan black swan events
+    • Assumptions tentang linear/predictable relationships
+    • Market sentiment dan geopolitical factors tidak dimodelkan
+
+    RECOMMENDED USAGE:
+    • Gunakan sebagai educational tool
+    • Combine dengan fundamental analysis
+    • Consider multiple scenarios dan stress testing
+    • Regular model retraining dengan data terbaru
+    • Professional consultation untuk investment decisions
+
+    ═══════════════════════════════════════════════════════════════
+
+    📧 KONTAK & FEEDBACK
+
+    Jika ada pertanyaan, saran, atau feedback, silakan hubungi pengembang 
+    melalui channel yang tersedia dalam dokumentasi aplikasi.
+
+    Terima kasih telah menggunakan Aplikasi Prediksi Harga Emas!
+
+    ═══════════════════════════════════════════════════════════════
+    """
+
+        self.faq_text.insert(tk.END, faq_content)
+        self.apply_text_styling(self.faq_text)
+        self.faq_text.config(state=tk.DISABLED)
+
+    def apply_text_styling(self, text_widget):
+        """Apply consistent styling to text widgets"""
+        # Configure tags
+        text_widget.tag_configure("title", font=("Arial", 14, "bold"), foreground="darkblue")
+        text_widget.tag_configure("section", font=("Arial", 12, "bold"), foreground="darkgreen")
+        text_widget.tag_configure("subsection", font=("Arial", 11, "bold"), foreground="darkorange")
+        text_widget.tag_configure("code", font=("Consolas", 9), background="lightgray")
+        text_widget.tag_configure("emphasis", font=("Arial", 10, "bold"), foreground="darkred")
+        text_widget.tag_configure("warning", font=("Arial", 10, "bold"), foreground="red")
+
+    def on_toc_selection(self, event):
+        """Handle table of contents selection"""
+        selection = self.toc_tree.selection()
+        if selection:
+            item = self.toc_tree.item(selection[0])
+            if item['values']:
+                topic_key = item['values'][0]
+                self.navigate_to_topic(topic_key)
+                self.theory_status.config(text=f"Menampilkan: {item['text']}")
+
+    def navigate_to_topic(self, topic_key):
+        """Navigate to specific topic in theory content"""
+        # Map topic keys to tab indices and search terms
+        topic_mapping = {
+            # Pengantar Tab (0)
+            'intro': (0, None),
+            'intro_purpose': (0, "TUJUAN APLIKASI"),
+            'intro_usage': (0, "CARA PENGGUNAAN"),
+            'intro_features': (0, "FITUR UTAMA"),
+
+            # Teori SVD Tab (1)
+            'svd_theory': (1, None),
+            'svd_math': (1, "DASAR MATEMATIKA"),
+            'svd_algorithm': (1, "ALGORITMA SVD"),
+            'svd_implementation': (1, "IMPLEMENTASI DALAM PREDIKSI"),
+            'svd_pros_cons': (1, "KEUNGGULAN SVD"),
+
+            # ML Models Tab (2)
+            'ml_models': (2, None),
+            'linear_regression': (2, "LINEAR REGRESSION"),
+            'ridge_regression': (2, "RIDGE REGRESSION"),
+            'lasso_regression': (2, "LASSO REGRESSION"),
+            'random_forest': (2, "RANDOM FOREST"),
+            'model_comparison': (2, "MODEL COMPARISON FRAMEWORK"),
+
+            # Data Analysis Topics - Map to Guide Tab (3) where analysis is explained
+            'data_analysis': (3, "TAB ANALISIS LANJUTAN"),
+            'trend_analysis': (3, "ANALISIS TREND"),
+            'correlation_analysis': (3, "ANALISIS KORELASI"),
+            'sensitivity_analysis': (3, "ANALISIS SENSITIVITAS"),
+            'outlier_analysis': (3, "ANALISIS OUTLIER"),
+            'monte_carlo': (3, "MONTE CARLO SIMULATION"),
+
+            # User Guide Tab (3)
+            'user_guide': (3, None),
+            'guide_data': (3, "TAB DATA HISTORIS"),
+            'guide_prediction': (3, "TAB PREDIKSI"),
+            'guide_analysis': (3, "TAB ANALISIS LANJUTAN"),
+            'guide_comparison': (3, "TAB PERBANDINGAN MODEL"),
+            'guide_tips': (3, "TIPS & TRIK PENGGUNAAN"),
+
+            # FAQ Tab (4)
+            'faq': (4, None),
+            'faq_general': (4, "PERTANYAAN UMUM"),
+            'faq_troubleshooting': (4, "TROUBLESHOOTING"),
+            'faq_support': (4, "DUKUNGAN TEKNIS"),
+
+            # References - Map to FAQ tab for now
+            'references': (4, "LEARNING RESOURCES"),
+            'references_papers': (4, "Buku Referensi"),
+            'references_technical': (4, "Technical Documentation"),
+            'references_online': (4, "Online Courses")
+        }
+
+        if topic_key in topic_mapping:
+            tab_index, search_term = topic_mapping[topic_key]
+
+            # Switch to appropriate tab
+            self.theory_notebook.select(tab_index)
+
+            # Small delay to ensure tab is loaded
+            self.root.after(100, lambda: self.delayed_scroll(tab_index, search_term))
+        else:
+            # Handle unmapped topics
+            self.theory_status.config(text=f"Topik '{topic_key}' belum tersedia")
+
+    def delayed_scroll(self, tab_index, search_term):
+        """Delayed scroll to section after tab switch"""
+        if search_term:
+            self.scroll_to_section(tab_index, search_term)
+        else:
+            # Just move to top of the tab
+            text_widgets = [self.intro_text, self.math_text, self.ml_text,
+                            self.guide_text, self.faq_text]
+            if tab_index < len(text_widgets):
+                text_widgets[tab_index].see("1.0")
+
+    def scroll_to_section(self, tab_index, search_term):
+        """Scroll to specific section in text widget"""
+        text_widgets = [self.intro_text, self.math_text, self.ml_text,
+                        self.guide_text, self.faq_text]
+
+        if tab_index >= len(text_widgets):
+            return
+
+        text_widget = text_widgets[tab_index]
+
+        # Try different variations of the search term
+        search_variations = [
+            search_term,
+            search_term.upper(),
+            search_term.lower(),
+            search_term.title(),
+            search_term.replace(" ", "_"),
+            search_term.replace("_", " ")
+        ]
+
+        found_pos = None
+        for variation in search_variations:
+            found_pos = text_widget.search(variation, "1.0", tk.END)
+            if found_pos:
+                break
+
+        if found_pos:
+            # Scroll to the found position
+            text_widget.see(found_pos)
+
+            # Highlight the found text temporarily
+            end_pos = f"{found_pos}+{len(search_term)}c"
+            text_widget.tag_add("highlight", found_pos, end_pos)
+            text_widget.tag_configure("highlight", background="yellow", foreground="black")
+
+            # Remove highlight after 3 seconds
+            self.root.after(3000, lambda: text_widget.tag_remove("highlight", "1.0", tk.END))
+
+            # Update status
+            self.theory_status.config(text=f"Menampilkan: {search_term}")
+        else:
+            # If not found, just go to top and show a message
+            text_widget.see("1.0")
+            self.theory_status.config(text=f"Bagian '{search_term}' tidak ditemukan, menampilkan awal halaman")
+
+    def search_theory_content(self, event=None):
+        """Search content across all theory tabs"""
+        search_term = self.search_var.get().lower()
+        if not search_term:
+            return
+
+        # Search across all text widgets
+        text_widgets = [
+            (self.intro_text, "Pengantar"),
+            (self.math_text, "Teori SVD"),
+            (self.ml_text, "ML Models"),
+            (self.guide_text, "Panduan"),
+            (self.faq_text, "FAQ")
+        ]
+
+        results = []
+        for text_widget, tab_name in text_widgets:
+            try:
+                if hasattr(self, text_widget.__class__.__name__.lower() + '_text') or hasattr(self,
+                                                                                              text_widget.__class__.__name__):
+                    content = text_widget.get("1.0", tk.END).lower()
+                    if search_term in content:
+                        results.append(tab_name)
+            except Exception as e:
+                print(f"Error searching in {tab_name}: {e}")
+                continue
+
+        if results:
+            self.theory_status.config(text=f"Ditemukan di: {', '.join(results)}")
+        else:
+            self.theory_status.config(text=f"Tidak ditemukan: '{search_term}'")
+
+    def debug_navigation(self):
+        """Debug method to check navigation setup"""
+        print("=== DEBUG NAVIGATION ===")
+
+        # Check text widgets
+        text_widgets = ['intro_text', 'math_text', 'ml_text', 'guide_text', 'faq_text']
+        for widget_name in text_widgets:
+            if hasattr(self, widget_name):
+                widget = getattr(self, widget_name)
+                content_length = len(widget.get("1.0", tk.END))
+                print(f"✓ {widget_name}: exists, content length: {content_length}")
+            else:
+                print(f"✗ {widget_name}: MISSING")
+
+        # Check table of contents
+        toc_items = self.toc_tree.get_children()
+        print(f"TOC items count: {len(toc_items)}")
+
+        for item in toc_items[:3]:  # Check first 3 items
+            item_data = self.toc_tree.item(item)
+            print(f"TOC item: {item_data['text']} -> {item_data['values']}")
+
+            # Check children
+            children = self.toc_tree.get_children(item)
+            for child in children[:2]:  # Check first 2 children
+                child_data = self.toc_tree.item(child)
+                print(f"  Child: {child_data['text']} -> {child_data['values']}")
+
+        print("=== END DEBUG ===")
+
+    # Add a button in the control panel to call debug (for testing)
+    def add_debug_button_to_control_panel(self, control_panel):
+        """Add debug button to control panel (for development)"""
+        debug_frame = ttk.Frame(control_panel)
+        debug_frame.pack(side=tk.LEFT, padx=(10, 0))
+
+        ttk.Button(debug_frame, text="🐛 Debug",
+                   command=self.debug_navigation, width=8).pack(side=tk.LEFT)
+
+    def reset_theory_search(self):
+        """Reset search and clear highlights"""
+        self.search_var.set("")
+        self.theory_status.config(text="Siap - Pilih topik dari daftar isi")
+
+        # Clear all highlights
+        text_widgets = [self.intro_text, self.math_text, self.ml_text,
+                        self.guide_text, self.faq_text]
+        for widget in text_widgets:
+            widget.tag_remove("highlight", "1.0", tk.END)
+
+    def update_font_size(self):
+        """Update font size for all text widgets"""
+        new_size = self.font_size.get()
+        text_widgets = [self.intro_text, self.math_text, self.ml_text,
+                        self.guide_text, self.faq_text]
+
+        for widget in text_widgets:
+            current_font = widget.cget("font")
+            if isinstance(current_font, str):
+                # Parse font string
+                parts = current_font.split()
+                font_family = parts[0] if parts else "Arial"
+            else:
+                font_family = current_font[0] if current_font else "Arial"
+
+            widget.config(font=(font_family, new_size))
+
+    def toggle_content_theme(self):
+        """Toggle between light and dark theme for content"""
+        if self.dark_mode.get():
+            # Dark theme
+            bg_color = "#2d2d2d"
+            fg_color = "#ffffff"
+            select_color = "#404040"
+        else:
+            # Light theme
+            bg_color = "white"
+            fg_color = "black"
+            select_color = "#e0e0e0"
+
+        text_widgets = [self.intro_text, self.math_text, self.ml_text,
+                        self.guide_text, self.faq_text]
+
+        for widget in text_widgets:
+            widget.config(bg=bg_color, fg=fg_color, selectbackground=select_color)
+
+    def export_theory_pdf(self):
+        """Export theory content to PDF"""
+        try:
+            from reportlab.lib.pagesizes import letter, A4
+            from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+            from reportlab.lib.styles import getSampleStyleSheet
+
+            filename = filedialog.asksaveasfilename(
+                defaultextension=".pdf",
+                filetypes=[("PDF files", "*.pdf")]
+            )
+
+            if filename:
+                # This would require implementing PDF generation
+                # For now, show a placeholder message
+                messagebox.showinfo("Export PDF",
+                                    "Fitur export PDF akan diimplementasikan. "
+                                    "Saat ini bisa copy-paste konten ke word processor.")
+        except ImportError:
+            messagebox.showwarning("Export PDF",
+                                   "Library reportlab tidak tersedia. "
+                                   "Install dengan: pip install reportlab")
+        except Exception as e:
+            messagebox.showerror("Error", f"Gagal export PDF: {str(e)}")
+            
     # === Utility Methods ===
 
     def buat_tooltip(self, widget, text):

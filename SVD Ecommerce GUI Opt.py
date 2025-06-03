@@ -1,3 +1,139 @@
+"""
+===============================================================================
+                            Dokumentasi Kode
+===============================================================================
+
+Judul: Aplikasi Rekomendasi E-Commerce dengan Sistem SVD yang Ditingkatkan
+Deskripsi:
+    Skrip ini mengimplementasikan sistem rekomendasi berbasis Singular Value Decomposition (SVD)
+    untuk aplikasi e-commerce. Aplikasi ini menyediakan antarmuka pengguna grafis (GUI) interaktif
+    yang memungkinkan pengguna untuk memuat data, melatih model, mengoptimalkan hyperparameter,
+    dan mengevaluasi kinerja model dengan berbagai metrik. Aplikasi ini juga memungkinkan pengguna
+    untuk membuat rekomendasi berdasarkan pengguna atau item serta visualisasi performa model.
+
+    Fitur utama:
+    - Generasi data sintetis untuk pengujian
+    - Pelatihan model menggunakan berbagai algoritma SVD
+    - Optimasi hyperparameter untuk meningkatkan akurasi model
+    - Evaluasi dengan metrik RMSE, MAE, dan waktu eksekusi
+    - Visualisasi distribusi rating dan performa model
+    - Pengaturan tema antarmuka pengguna (light/dark mode)
+
+Penulis: Narendra Yusuf 未来
+Tanggal: May 23 2025
+Versi: 2.0
+
+===============================================================================
+                            Deskripsi Data
+===============================================================================
+
+Data input terdiri dari rating yang diberikan oleh pengguna terhadap item di platform e-commerce:
+    - 'user_id': Identitas unik untuk setiap pengguna
+    - 'item_id': Identitas unik untuk setiap item
+    - 'rating': Penilaian yang diberikan oleh pengguna terhadap item tersebut
+
+Selain itu, aplikasi juga memungkinkan penggunaan data sintetis yang dapat dihasilkan melalui antarmuka.
+
+===============================================================================
+                            Ikhtisar Fungsionalitas
+===============================================================================
+
+1. **Pembuatan Data Sintetis**:
+    - Pengguna dapat menghasilkan data rating sintetis dengan menentukan jumlah pengguna, item,
+      dan tingkat kelangkaan data. Data ini digunakan untuk pelatihan dan pengujian model rekomendasi.
+
+2. **Pelatihan Model SVD**:
+    - Pengguna dapat memilih dari berbagai algoritma SVD yang tersedia untuk melatih model rekomendasi
+      berdasarkan data yang dimiliki, termasuk penggunaan teknik SVD++ dan NMF.
+
+3. **Optimasi Hyperparameter**:
+    - Aplikasi mendukung optimasi hyperparameter untuk model rekomendasi dengan mengatur jumlah epoch,
+      laju pembelajaran, dan regulasi untuk meningkatkan kinerja model.
+
+4. **Evaluasi Model**:
+    - Evaluasi model dilakukan dengan menghitung metrik seperti RMSE dan MAE, serta waktu eksekusi pelatihan
+      dan pengujian. Metrik evaluasi lainnya, termasuk precision, recall, dan F1-score, juga dapat dihitung.
+
+5. **Rekomendasi Berdasarkan Pengguna dan Item**:
+    - Pengguna dapat memilih model yang telah dilatih dan menghasilkan rekomendasi untuk pengguna tertentu atau
+      menemukan item yang serupa dengan item yang dipilih.
+
+6. **Visualisasi**:
+    - Hasil evaluasi dan performa model divisualisasikan dengan grafik distribusi rating, waktu eksekusi, dan
+      perbandingan metrik antar algoritma.
+
+7. **Tema Antarmuka Pengguna**:
+    - Pengguna dapat memilih tema antarmuka gelap atau terang untuk pengalaman penggunaan yang lebih baik.
+
+===============================================================================
+                            Pembagian Kode
+===============================================================================
+
+1. **Kelas EnhancedSVDRecommenderApp**:
+    - Kelas utama yang mengelola antarmuka pengguna (GUI) dan fungsionalitas aplikasi. Kelas ini mencakup
+      metode untuk memuat data, melatih model, mengoptimalkan parameter, serta mengevaluasi dan
+      memvisualisasikan hasil.
+
+2. **Fungsi Setup UI**:
+    - Fungsi-fungsi ini mendefinisikan struktur GUI, termasuk tab untuk data, algoritma, optimasi,
+      rekomendasi, evaluasi, visualisasi, dan pengaturan. Fungsi-fungsi ini menangani pembuatan tombol,
+      label, input, dan tabel.
+
+3. **Fungsi Pembuatan Data**:
+    - Fungsi untuk menghasilkan data sintetis berdasarkan parameter yang ditentukan oleh pengguna,
+      seperti jumlah pengguna, item, dan distribusi rating.
+
+4. **Fungsi Optimasi**:
+    - Fungsi untuk melakukan optimasi hyperparameter untuk model rekomendasi, menguji berbagai konfigurasi
+      untuk meningkatkan kinerja model.
+
+5. **Fungsi Evaluasi Model**:
+    - Fungsi untuk mengevaluasi model menggunakan metrik akurasi dan performa lainnya. Ini mencakup penghitungan
+      RMSE, MAE, dan waktu pelatihan serta pengujian, serta visualisasi hasil perbandingan.
+
+6. **Fungsi Rekomendasi**:
+    - Fungsi untuk menghasilkan rekomendasi item berdasarkan model yang telah dilatih, serta untuk menemukan
+      item yang mirip dengan item tertentu.
+
+7. **Fungsi Visualisasi**:
+    - Fungsi untuk menampilkan grafik distribusi rating, performa waktu pelatihan dan pengujian, serta perbandingan
+      antar algoritma dengan menggunakan berbagai jenis chart.
+
+8. **Pengaturan Tema**:
+    - Fungsi untuk mengganti antara mode gelap dan terang, serta untuk mengonfigurasi preferensi pengguna lainnya.
+
+===============================================================================
+                            Instruksi Penggunaan
+===============================================================================
+
+1. **Menjalankan Aplikasi**:
+    - Jalankan aplikasi dan pilih dataset yang ingin digunakan untuk melatih model rekomendasi atau buat
+      data sintetis.
+
+2. **Menggunakan Tab Data**:
+    - Pilih jumlah pengguna, item, dan sparsitas data untuk menghasilkan data sintetis atau impor data dari file
+      CSV/Excel.
+
+3. **Melatih Model**:
+    - Pilih model rekomendasi yang diinginkan dari tab 'Algorithms' dan latih model berdasarkan data yang tersedia.
+
+4. **Optimasi dan Evaluasi**:
+    - Gunakan tab 'Optimization' untuk mengoptimalkan hyperparameter model. Lakukan evaluasi di tab 'Evaluation'
+      untuk menghitung metrik akurasi dan performa.
+
+5. **Rekomendasi dan Visualisasi**:
+    - Gunakan tab 'Recommendations' untuk menghasilkan rekomendasi berdasarkan model yang dilatih. Gunakan tab
+      'Visualization' untuk melihat grafik distribusi rating dan metrik performa model.
+
+6. **Pengaturan Tema**:
+    - Sesuaikan tema aplikasi antara mode gelap atau terang menggunakan pengaturan pada tab 'Settings'.
+
+7. **Menyimpan dan Memuat Data**:
+    - Gunakan opsi pada menu untuk menyimpan model, memuat model, atau mengekspor rekomendasi ke file CSV.
+
+===============================================================================
+"""
+#region
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -26,9 +162,10 @@ from PIL import Image, ImageTk
 import random
 import json
 
+
 matplotlib.use('TkAgg')
 warnings.filterwarnings('ignore')
-
+#endregion
 
 class EnhancedSVDRecommenderApp:
     def __init__(self, root):

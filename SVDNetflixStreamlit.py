@@ -1,3 +1,150 @@
+"""
+===============================================================================
+                            Dokumentasi Kode
+===============================================================================
+
+Judul: Sistem Rekomendasi Film dengan SVD dan Streamlit
+Deskripsi:
+    Skrip ini adalah aplikasi sistem rekomendasi film menggunakan metode Singular Value
+    Decomposition (SVD) yang diintegrasikan dengan antarmuka pengguna berbasis Streamlit.
+    Pengguna dapat mengimpor data film dan rating, melatih model rekomendasi, menyesuaikan
+    hyperparameter, serta mendapatkan rekomendasi film berdasarkan prediksi rating.
+
+    Aplikasi ini memungkinkan pengguna untuk:
+    - Mengimpor dan memuat data film dan rating
+    - Melatih model rekomendasi menggunakan SVD atau SVD++
+    - Menyesuaikan hyperparameter dan melaksanakan tuning
+    - Menyediakan rekomendasi film untuk pengguna tertentu
+    - Melihat statistik performa model dan analisis distribusi rating
+    - Menyimpan dan mengelola data pengguna serta rating mereka
+
+Penulis: Narendra Yusuf 未来
+Tanggal: May 30 2025
+Versi: 1.0
+
+
+===============================================================================
+                            Deskripsi Data
+===============================================================================
+
+Data input yang digunakan untuk sistem rekomendasi ini terdiri dari dua dataset utama:
+    - **Data Film**: Menyimpan informasi tentang film, termasuk ID film, nama film, dan tahun rilis.
+    - **Data Rating**: Menyimpan rating yang diberikan oleh pengguna terhadap film, yang mencakup
+      ID pengguna, ID film, rating yang diberikan, dan tanggal rating.
+
+Data ini digunakan untuk melatih model rekomendasi dan menghasilkan prediksi film
+yang disarankan kepada pengguna berdasarkan preferensi mereka.
+
+===============================================================================
+                            Ikhtisar Fungsionalitas
+===============================================================================
+
+1. **Pengunggahan Data**:
+    - Pengguna dapat mengunggah data film dan rating melalui antarmuka web. Data ini kemudian
+      digunakan untuk membangun dataset yang dapat digunakan oleh model rekomendasi.
+
+2. **Pelatihan Model Rekomendasi**:
+    - Aplikasi ini memungkinkan pengguna untuk melatih model rekomendasi menggunakan algoritma
+      SVD atau SVD++. Proses pelatihan model dilakukan dengan memanfaatkan data rating yang diunggah.
+
+3. **Optimasi Hyperparameter**:
+    - Pengguna dapat melakukan optimasi hyperparameter untuk model SVD atau SVD++ melalui pencarian grid.
+      Proses ini bertujuan untuk menemukan kombinasi parameter yang memberikan hasil terbaik.
+
+4. **Rekomendasi Film**:
+    - Setelah model dilatih, aplikasi ini dapat memberikan rekomendasi film kepada pengguna berdasarkan
+      preferensi mereka. Pengguna dapat mendapatkan daftar film yang diprediksi sesuai dengan rating yang
+      diberikan oleh model.
+
+5. **Evaluasi Model**:
+    - Aplikasi menghitung metrik performa seperti RMSE (Root Mean Square Error) dan MAE (Mean Absolute Error)
+      untuk mengevaluasi akurasi model. Evaluasi dilakukan menggunakan data uji yang dipisahkan dari data pelatihan.
+
+6. **Visualisasi Hasil**:
+    - Visualisasi hasil evaluasi model, distribusi rating, dan analisis popularitas film dapat dilihat melalui grafik
+      interaktif, yang memberikan wawasan mengenai distribusi rating dan performa model.
+
+7. **Antarmuka Pengguna (Web)**:
+    - Antarmuka pengguna berbasis web menyediakan kontrol untuk mengunggah data, memilih algoritma, melakukan
+      optimasi model, mendapatkan rekomendasi, dan memvisualisasikan hasil evaluasi.
+
+===============================================================================
+                            Pembagian Kode
+===============================================================================
+
+1. **Kelas MovieRecommender**:
+    - Kelas utama yang menangani fungsionalitas aplikasi, termasuk memuat data film dan rating,
+      melatih model rekomendasi, melakukan evaluasi model, dan menghasilkan rekomendasi.
+
+2. **Fungsi `load_movie_data`**:
+    - Fungsi ini digunakan untuk memuat data film dari file yang diunggah, membersihkan dan menyiapkan
+      data untuk digunakan dalam model rekomendasi.
+
+3. **Fungsi `load_ratings_data`**:
+    - Fungsi ini digunakan untuk memuat data rating pengguna, memproses file rating yang diunggah, dan
+      membentuk dataset yang siap untuk pelatihan model.
+
+4. **Fungsi `tune_hyperparameters`**:
+    - Fungsi ini menjalankan pencarian grid untuk menemukan hyperparameter terbaik (misalnya, jumlah faktor,
+      jumlah epoch, laju pembelajaran, dll.) untuk model rekomendasi.
+
+5. **Fungsi `train_model`**:
+    - Fungsi ini melatih model rekomendasi menggunakan parameter yang diberikan dan data pelatihan.
+
+6. **Fungsi `cross_validate_model`**:
+    - Fungsi ini melakukan validasi silang untuk mengevaluasi performa model dengan menggunakan k-folds,
+      menghitung RMSE dan MAE.
+
+7. **Fungsi `evaluate_model`**:
+    - Fungsi ini mengevaluasi model yang telah dilatih menggunakan data uji dan menghitung metrik performa seperti RMSE dan MAE.
+
+8. **Fungsi `get_recommendations`**:
+    - Fungsi ini menghasilkan rekomendasi film untuk pengguna tertentu berdasarkan model yang dilatih dan rating yang diprediksi.
+
+9. **Fungsi `create_user_movie_matrix`**:
+    - Fungsi ini membuat matriks pengguna-film untuk visualisasi dan analisis lebih lanjut.
+
+10. **Fungsi `add_user_rating`**:
+    - Fungsi ini memungkinkan pengguna untuk menambahkan rating baru untuk film tertentu ke dalam sistem, yang kemudian memperbarui data dan model.
+
+11. **Fungsi `get_user_ratings`**:
+    - Fungsi ini mengambil semua rating yang diberikan oleh pengguna tertentu, termasuk nama film, tahun rilis, dan rating yang diberikan.
+
+12. **Fungsi `get_popular_movies`**:
+    - Fungsi ini mengembalikan daftar film yang paling populer berdasarkan jumlah rating yang diterima.
+
+===============================================================================
+                            Instruksi Penggunaan
+===============================================================================
+
+1. **Menjalankan Aplikasi**:
+    - Jalankan aplikasi dan pilih data yang ingin digunakan untuk pelatihan model. Pengguna dapat mengunggah data film
+      dan rating melalui antarmuka web.
+
+2. **Melatih Model Rekomendasi**:
+    - Pilih algoritma yang diinginkan (SVD atau SVD++) dan jalankan pelatihan model berdasarkan data yang diunggah.
+
+3. **Optimasi Hyperparameter**:
+    - Gunakan fitur pencarian grid untuk mengoptimalkan hyperparameter model dan pilih parameter terbaik.
+
+4. **Evaluasi Model**:
+    - Lakukan evaluasi model dengan menghitung metrik RMSE dan MAE. Periksa hasil evaluasi untuk memastikan akurasi model.
+
+5. **Mendapatkan Rekomendasi**:
+    - Masukkan ID pengguna dan jumlah rekomendasi yang diinginkan untuk mendapatkan rekomendasi film berdasarkan model yang telah dilatih.
+
+6. **Visualisasi Hasil**:
+    - Lihat grafik distribusi rating, popularitas film, dan performa model untuk mendapatkan wawasan lebih dalam mengenai hasil prediksi.
+
+7. **Menambahkan Rating Pengguna**:
+    - Gunakan antarmuka untuk menambahkan rating baru untuk film dan memperbarui model berdasarkan rating terbaru.
+
+8. **Melihat Film Populer**:
+    - Lihat daftar film paling populer berdasarkan jumlah rating yang diterima dan rata-rata rating di antarmuka pengguna.
+
+===============================================================================
+"""
+#region
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -17,6 +164,7 @@ import hashlib
 import pickle
 import json
 from datetime import datetime
+#endregion
 
 # Set page configuration
 st.set_page_config(

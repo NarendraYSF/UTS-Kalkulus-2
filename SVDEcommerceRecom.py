@@ -1,3 +1,136 @@
+"""
+===============================================================================
+                            Dokumentasi Kode
+===============================================================================
+
+Judul: Aplikasi Prediksi Harga Emas dengan SVD
+Deskripsi:
+    Skrip ini adalah aplikasi yang dirancang untuk memprediksi harga emas berdasarkan
+    analisis historis dan berbagai faktor ekonomi. Aplikasi ini menggunakan Singular
+    Value Decomposition (SVD) untuk menganalisis data historis dan menghitung prediksi
+    harga emas di masa depan berdasarkan variabel-variabel seperti inflasi, suku bunga,
+    dan indeks USD.
+
+    Fitur utama aplikasi meliputi:
+    - Pengolahan data historis untuk memasukkan variabel ekonomi yang relevan
+    - Prediksi harga emas menggunakan berbagai model regresi
+    - Analisis sensitivitas terhadap perubahan parameter ekonomi
+    - Visualisasi data dan hasil analisis dalam bentuk grafik dan tabel
+    - Kemampuan untuk memperbarui data secara dinamis dan melakukan optimasi model
+
+Penulis: Narendra Yusuf 未来
+Tanggal: May 20 2025
+Versi: 1.0
+
+===============================================================================
+                            Deskripsi Data
+===============================================================================
+
+Data input yang digunakan terdiri dari informasi historis terkait inflasi, suku bunga,
+indeks USD, dan harga emas:
+    - 'tahun': Tahun data historis
+    - 'inflasi': Tingkat inflasi per tahun
+    - 'suku_bunga': Tingkat suku bunga yang berlaku
+    - 'indeks_usd': Indeks kekuatan dolar Amerika Serikat
+    - 'harga_emas': Harga emas per ons dalam USD
+
+Data ini digunakan untuk membangun model prediksi harga emas, serta untuk analisis
+sensitivitas terhadap perubahan parameter ekonomi.
+
+===============================================================================
+                            Ikhtisar Fungsionalitas
+===============================================================================
+
+1. **Pengolahan Data Historis**:
+    - Data historis digunakan untuk menghitung harga emas berdasarkan berbagai faktor ekonomi.
+    - Aplikasi menyediakan antarmuka untuk memuat dan memperbarui data historis.
+
+2. **Model Prediksi**:
+    - Berdasarkan data historis, aplikasi membangun model prediksi harga emas menggunakan regresi linier dan model SVD.
+    - Pengguna dapat memilih model untuk digunakan dalam prediksi harga emas masa depan.
+
+3. **Analisis Sensitivitas**:
+    - Aplikasi menyediakan analisis sensitivitas untuk mengevaluasi bagaimana perubahan dalam parameter ekonomi (inflasi, suku bunga, indeks USD) mempengaruhi prediksi harga emas.
+    - Hasil analisis sensitivitas dapat divisualisasikan untuk pemahaman lebih mendalam.
+
+4. **Optimasi dan Validasi Model**:
+    - Aplikasi menggunakan teknik validasi silang dan perbandingan model untuk memilih model terbaik yang memberikan hasil prediksi yang akurat.
+    - Model yang digunakan dapat disesuaikan dengan parameter yang berbeda.
+
+5. **Visualisasi Hasil**:
+    - Grafik interaktif digunakan untuk memvisualisasikan data historis, prediksi harga emas, serta hasil analisis sensitivitas dan model perbandingan.
+
+6. **Antarmuka Pengguna (GUI)**:
+    - Antarmuka grafis (GUI) yang intuitif memungkinkan pengguna untuk mengimpor data, memilih model prediksi, dan memvisualisasikan hasil analisis.
+    - Pengguna dapat memilih tema antarmuka (terang atau gelap) sesuai preferensi mereka.
+
+7. **Fitur Auto-Save**:
+    - Aplikasi dapat menyimpan pengaturan dan hasil secara otomatis pada interval waktu tertentu untuk memastikan data tidak hilang.
+
+8. **Pengaturan Tema dan Bahasa**:
+    - Aplikasi memungkinkan pengaturan tema (gelap atau terang) serta bahasa antarmuka yang dapat disesuaikan.
+
+===============================================================================
+                            Pembagian Kode
+===============================================================================
+
+1. **Kelas EnhancedAplikasiPrediksiHargaEmas**:
+    - Kelas utama yang menangani antarmuka pengguna (GUI) dan logika aplikasi. Di dalamnya termasuk
+      metode untuk memuat data, memilih model, menjalankan prediksi, serta menampilkan hasil evaluasi dan
+      visualisasi data.
+
+2. **Fungsi untuk Menangani Data**:
+    - Fungsi yang mengimpor dan mengekspor data, serta memperbarui dan mengelola data historis yang digunakan untuk
+      pelatihan model prediksi.
+
+3. **Fungsi Prediksi**:
+    - Fungsi untuk menjalankan prediksi harga emas berdasarkan input variabel ekonomi dan model yang dipilih.
+
+4. **Fungsi Analisis Sensitivitas**:
+    - Fungsi untuk melakukan analisis sensitivitas terhadap perubahan parameter ekonomi, serta menghasilkan
+      visualisasi dan laporan analisis.
+
+5. **Fungsi Optimasi Model**:
+    - Fungsi untuk membandingkan berbagai model dan memilih yang terbaik menggunakan teknik validasi silang (cross-validation) dan perbandingan model.
+
+6. **Fungsi Visualisasi**:
+    - Fungsi untuk membuat grafik dan plot yang menggambarkan data historis, hasil prediksi, dan analisis sensitivitas.
+
+7. **Pengaturan Aplikasi**:
+    - Aplikasi menyediakan pengaturan untuk memilih tema (terang atau gelap), mengaktifkan fitur auto-save, dan memilih bahasa antarmuka.
+
+===============================================================================
+                            Instruksi Penggunaan
+===============================================================================
+
+1. **Menjalankan Aplikasi**:
+    - Buka aplikasi dan pilih data historis yang akan digunakan untuk pelatihan model prediksi harga emas.
+    - Pilih model yang ingin digunakan untuk prediksi, baik regresi linier atau model berbasis SVD.
+
+2. **Melakukan Prediksi**:
+    - Masukkan parameter ekonomi untuk tahun yang diinginkan (misalnya, inflasi, suku bunga, dan indeks USD) untuk melakukan prediksi harga emas.
+    - Hasil prediksi akan ditampilkan di antarmuka aplikasi, dan grafik visualisasi akan menunjukkan hasilnya.
+
+3. **Analisis Sensitivitas**:
+    - Gunakan tab analisis untuk mengevaluasi bagaimana perubahan parameter ekonomi mempengaruhi prediksi harga emas.
+    - Hasil analisis sensitivitas akan disajikan dalam bentuk tabel dan grafik.
+
+4. **Optimasi Model**:
+    - Aplikasi secara otomatis akan mengoptimalkan model menggunakan teknik validasi silang untuk memilih model terbaik berdasarkan metrik evaluasi yang relevan.
+
+5. **Visualisasi Data**:
+    - Gunakan grafik interaktif untuk melihat data historis, hasil prediksi, serta analisis sensitivitas dalam bentuk plot.
+    - Anda juga dapat mengekspor grafik dalam format yang diinginkan untuk presentasi atau laporan.
+
+6. **Pengaturan Tema**:
+    - Aplikasi memungkinkan Anda untuk memilih antara tema terang atau gelap untuk pengalaman pengguna yang lebih baik.
+
+7. **Auto-Save**:
+    - Aplikasi secara otomatis menyimpan hasil dan pengaturan pada interval waktu tertentu (default setiap 5 menit), yang dapat disesuaikan melalui pengaturan aplikasi.
+
+===============================================================================
+"""
+#region
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -14,7 +147,7 @@ from tkinter import ttk, scrolledtext, messagebox
 from tkinter.font import Font
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib
-
+#endregion
 matplotlib.use('TkAgg')
 warnings.filterwarnings('ignore')
 

@@ -1,10 +1,108 @@
+"""
+===============================================================================
+                            Dokumentasi Kode
+===============================================================================
+
+Judul: Sistem Rekomendasi SVD - Studi Kasus Dataset ModCloth
+Deskripsi:
+    Skrip ini menerapkan metode Singular Value Decomposition (SVD) untuk menganalisis
+    data rating produk dari pengguna pada platform e-commerce (ModCloth).
+    Tujuannya adalah untuk membuat sistem rekomendasi menggunakan dekomposisi matriks
+    dan mengukur kinerja model menggunakan metrik evaluasi seperti MAPE (Mean Absolute
+    Percentage Error) dan sMAPE (Symmetric Mean Absolute Percentage Error).
+    Selain itu, skrip ini juga melakukan optimasi dengan GridSearchCV untuk menentukan
+    jumlah komponen terbaik pada dekomposisi SVD.
+
+Penulis: Narendra Yusuf 未来
+Tanggal: May 24 2025
+Versi: 1.0
+
+===============================================================================
+                            Deskripsi Data
+===============================================================================
+
+Data input terdiri dari rating yang diberikan oleh pengguna terhadap produk-produk:
+    - 'Pengguna': Nama pengguna (Pengguna_1 hingga Pengguna_5)
+    - 'Produk': Nama produk (Produk_A hingga Produk_D)
+    - Data rating berupa nilai yang dihasilkan oleh pengguna untuk produk yang mereka beli.
+    - Data prediksi dan metrik evaluasi seperti MAPE dan sMAPE juga disediakan untuk
+      membandingkan hasil prediksi dengan nilai aktual.
+
+===============================================================================
+                            Ikhtisar Fungsionalitas
+===============================================================================
+
+1. Inisialisasi Data:
+    - Data rating pengguna terhadap produk disusun dalam format DataFrame pandas untuk
+      memudahkan analisis dan manipulasi.
+
+2. Metrik Evaluasi:
+    - Menghitung MAPE dan sMAPE untuk menilai akurasi prediksi terhadap nilai aktual.
+
+3. Pembuatan Model SVD:
+    - Sistem rekomendasi dibangun menggunakan dekomposisi matriks SVD untuk memproyeksikan
+      nilai rating yang hilang dan menghasilkan prediksi berdasarkan komponen-komponen SVD.
+
+4. Optimasi GridSearch:
+    - GridSearchCV digunakan untuk menemukan jumlah komponen terbaik pada dekomposisi SVD
+      yang meminimalkan RMSE (Root Mean Squared Error).
+
+5. Prediksi dan Evaluasi:
+    - Matriks prediksi dihitung berdasarkan komponen yang dihasilkan dari SVD, kemudian
+      dilakukan evaluasi hasil dengan membandingkan MAPE dan sMAPE aktual dengan ekspektasi.
+
+6. Visualisasi dan Perbandingan:
+    - Visualisasi hasil perbandingan antara nilai aktual dan prediksi, serta evaluasi
+      perbandingan MAPE dan sMAPE untuk hasil aktual vs ekspektasi.
+
+===============================================================================
+                            Pembagian Kode
+===============================================================================
+
+1. Persiapan Data:
+    - Data pengguna, produk, dan rating diorganisir dalam bentuk DataFrame untuk digunakan
+      dalam perhitungan SVD.
+    - Matriks ekspektasi hasil prediksi dan metrik MAPE/sMAPE disiapkan untuk evaluasi.
+
+2. Kelas RekomenderSVD:
+    - Kelas ini mendefinisikan model SVD kustom, termasuk langkah-langkah untuk menghitung
+      dekomposisi SVD dan membuat prediksi berdasarkan komponen yang dipilih.
+
+3. GridSearchCV:
+    - GridSearchCV digunakan untuk mencari parameter terbaik (jumlah komponen) untuk model SVD.
+
+4. Fungsi Evaluasi:
+    - Fungsi-fungsi seperti `hitung_metrik` dan `bandingkan_dengan_ekspektasi` digunakan untuk
+      menghitung MAPE dan sMAPE dan membandingkan hasil prediksi dengan ekspektasi yang sudah
+      ditentukan sebelumnya.
+
+===============================================================================
+                            Instruksi Penggunaan
+===============================================================================
+
+1. Pastikan pustaka yang dibutuhkan (`numpy`, `pandas`, `sklearn`, `warnings`) telah terinstal
+   di lingkungan Python Anda.
+
+2. Data pengguna dan produk dapat dimodifikasi dalam dictionary `data_rating` dan
+   `ekspektasi_hasil` untuk eksperimen lebih lanjut dengan dataset lain.
+
+3. Model dapat disesuaikan dengan mengubah parameter jumlah komponen pada inisialisasi
+   objek `RekomenderSVD`.
+
+4. Jalankan skrip untuk melatih model SVD dan menghasilkan prediksi yang akan dibandingkan
+   dengan hasil aktual serta menghitung metrik evaluasi seperti MAPE dan sMAPE.
+
+===============================================================================
+"""
+
+#region
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import GridSearchCV
 from sklearn.base import BaseEstimator, RegressorMixin
 from sklearn.metrics import mean_squared_error
 import warnings
-
+#endregion
 warnings.filterwarnings('ignore')
 
 # Membuat data sampel yang meniru karakteristik dataset ModCloth

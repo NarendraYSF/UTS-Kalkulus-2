@@ -1,9 +1,109 @@
+"""
+===============================================================================
+                            Dokumentasi Kode
+===============================================================================
+
+Judul: Analisis SVD Emas
+Deskripsi:
+    Skrip ini melakukan analisis Singular Value Decomposition (SVD) untuk memodelkan
+    data ekonomi, termasuk tingkat inflasi, suku bunga, indeks USD, dan harga emas.
+    Skrip ini mencakup pemrosesan data, manipulasi matriks, dan analisis kesalahan,
+    bersama dengan prediksi berdasarkan Principal Component Analysis (PCA).
+
+Penulis: Narendra Yusuf 未来
+Tanggal: May 22 2025
+Versi: 1.0
+
+===============================================================================
+                            Deskripsi Data
+===============================================================================
+
+Data input terdiri dari kolom-kolom berikut:
+    - 'Tahun': Tahun (2022, 2023, 2024)
+    - 'Inflasi (%)': Tingkat inflasi dalam persentase
+    - 'Suku Bunga (%)': Tingkat suku bunga dalam persentase
+    - 'Indeks Dollar AS': Indeks Dollar Amerika Serikat
+    - 'Harga Emas (USD)': Harga emas dalam USD
+
+===============================================================================
+                            Ikhtisar Fungsionalitas
+===============================================================================
+
+1. Inisialisasi Data:
+    - Dataset awal dibuat menggunakan dictionary `data`, yang mencakup indikator
+      ekonomi seperti inflasi, suku bunga, indeks USD, dan harga emas.
+
+2. Konstruksi Matriks:
+    - Matriks M dibangun dari data input dengan mengecualikan kolom 'Tahun' dan 'Harga Emas'.
+
+3. Matriks Target:
+    - Matriks target V dan Σ disediakan untuk perbandingan dan verifikasi selama analisis SVD.
+
+4. Singular Value Decomposition (SVD):
+    - Skrip ini menghitung nilai singular, matriks U, Σ, dan V menggunakan SVD dan membandingkan
+      hasil ini dengan matriks target.
+
+5. Rekonstruksi Matriks M:
+    - Matriks M direkonstruksi menggunakan matriks U, Σ, dan V yang dihitung untuk memverifikasi
+      kebenaran proses SVD.
+
+6. Perhitungan Kesalahan:
+    - Kesalahan antara matriks M asli dan matriks yang direkonstruksi dihitung dan ditampilkan.
+
+7. Verifikasi dengan SVD Bawaan:
+    - Skrip ini membandingkan hasil SVD kustom dengan fungsi SVD bawaan dari `scipy.linalg.svd`.
+
+8. Prediksi Harga Emas:
+    - Menggunakan komponen utama (dari hasil SVD), skrip ini mengkorelasikan komponen tersebut dengan data harga emas dan
+      menggunakan Regresi Linear untuk prediksi.
+
+9. Visualisasi:
+    - Hasil-hasil seperti perbandingan harga emas aktual vs prediksi, nilai singular, dan kesalahan rekonstruksi,
+      divisualisasikan menggunakan matplotlib.
+
+===============================================================================
+                            Pembagian Kode
+===============================================================================
+
+1. Persiapan Data:
+    - Inisialisasi dictionary 'data' dan DataFrame 'df'
+    - Konstruksi Matriks M dan matriks target (V, Σ)
+
+2. Analisis SVD:
+    - Pengaturan nilai singular target
+    - Perhitungan SVD dan penyesuaian matriks U, Σ, V
+    - Perhitungan kesalahan antara matriks asli dan matriks yang direkonstruksi
+
+3. Analisis Regresi:
+    - Menggunakan komponen utama untuk prediksi dengan Regresi Linear
+
+4. Visualisasi:
+    - Berbagai grafik untuk memvisualisasikan tren, korelasi, dan kesalahan
+
+===============================================================================
+                            Instruksi Penggunaan
+===============================================================================
+
+1. Untuk menjalankan kode, pastikan pustaka yang dibutuhkan (`numpy`, `pandas`, `scipy`,
+   `matplotlib`, `sklearn`) sudah terinstal dalam lingkungan Python Anda.
+
+2. Data dapat dimodifikasi dalam dictionary 'data' untuk tahun atau indikator ekonomi
+   yang berbeda.
+
+3. Sesuaikan matriks `V_target` dan `Sigma_target` sesuai dengan spesifikasi target baru
+   untuk menggunakan skrip ini pada kasus yang berbeda atau untuk memverifikasi perhitungan SVD lainnya.
+
+4. Tinjau plot yang dihasilkan pada akhir skrip untuk memahami hubungan antara variabel.
+
+===============================================================================
+"""
+#region
 import numpy as np
 import pandas as pd
 from scipy.linalg import svd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
-
+#endregion
 # Data dari tabel
 data = {
     'Tahun': [2022, 2023, 2024],
